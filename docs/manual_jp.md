@@ -15,7 +15,6 @@
   - [2. コンフィグファイルの作成](#2-コンフィグファイルの作成)
     - [generic](#generic)
     - [resource](#resource)
-  - [- **num_node** - 使用するノード数を指定します。](#--num_node---使用するノード数を指定します)
     - [ABCI](#abci)
     - [optimize](#optimize)
       - [parametersの記述例](#parametersの記述例)
@@ -32,9 +31,6 @@
   - [6 最適化実行](#6-最適化実行)
       - [オプション付きの実行](#オプション付きの実行)
         - [例](#例)
-  - [7 進捗の可視化について](#7-進捗の可視化について)
-        - [全結果の表示](#全結果の表示)
-        - [簡易フラグの表示](#簡易フラグの表示)
   - [補助ツールについて](#補助ツールについて)
     - [補助ツールの機能概要](#補助ツールの機能概要)
 
@@ -83,12 +79,12 @@ aiaccelをダウンロードします。
 ~~~bash
 > git clone https://gitlab.com/onishi-lab/opt
 ~~~
-ダウンロード完了後、optフォルダに移動します。
+ダウンロード完了後、aiaccelフォルダに移動します。
 ~~~bash
-> cd opt
+> cd aiaccel
 ~~~
 
-pipで依存環境をインストールします.
+依存環境をインストールします.
 ~~~bash
 > python -m pip install -r requirements.txt
 ~~~
@@ -102,6 +98,11 @@ pipで依存環境をインストールします.
 setup.pyを実行し、aiaccelをインストールします。
 ~~~bash
 > python setup.py install
+~~~
+
+または，
+~~~bash
+> python -m pip install git+https://github.com/aistairc/aiaccel.git
 ~~~
 
 aiaccelがインポートできることを確認します。
@@ -134,7 +135,7 @@ aiaccelがインポートできることを確認します。
 <br>
 
 - ご参考
-  - `config.yaml`、 `user.py`、 `job_script_preamble.sh` は任意のファイル名に変更可能です。変更した場合はコンフィグファイルの内容も変更する必要があります。
+  - `config.yaml`、 `user.py`、 `job_script_preamble.sh` は任意のファイル名に変更可能です。
 
 ---
 ## 2. コンフィグファイルの作成
@@ -161,8 +162,9 @@ resource:
   num_node: 4
 
 ```
-- **type** - 実行環境を指定します。`ABCI`、または`local`を指定します。`local`指定時は計算ノードのリソースにアクセスしません。
-- **num_node** - 使用するノード数を指定します。
+- **type** - 実行環境を指定します。`ABCI`、または`local`を指定します。
+- **num_node** - 使用するノード数を指定します。ローカルの場合はCPUコア数を指定してください。
+
 ---
 ### ABCI
 **サンプル**
@@ -546,14 +548,18 @@ export PYTHONPATH=$AIACCELPATH:$AIACCELPATH/lib
 > python -m aiaccel.start
 ```
 - --clean : workspaceが既に存在する場合、最適化実行前にworkspaceを削除します。
+- --resume : workspaceが既に存在する場合、保存データが存在するトライアルを指定することで，指定のトライアルから再開することができます．
 
 ##### 例
 ```bash
 python -m aiaccel.start --config config.yaml --clean
 ```
 
+```bash
+python -m aiaccel.start --config config.yaml --resume 5
+```
 
----
+<!-- <br>
 ## 7 進捗の可視化について
 ##### 全結果の表示
 ```bash
@@ -563,7 +569,9 @@ python -m aiaccel.start --config config.yaml --clean
 ##### 簡易フラグの表示
 ```bash
 > python -m aiaccel.graph --config config.yaml
-```
+``` -->
+
+
 
 <br>
 <hr>
