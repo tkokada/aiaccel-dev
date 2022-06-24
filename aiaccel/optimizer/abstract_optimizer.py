@@ -280,10 +280,7 @@ class AbstractOptimizer(AbstractModule):
             None
         """
 
-        self.generated_parameter = dict_objects['generated_parameter']
-        loop_counts = (
-            self.snapshot.get_inner_loop_counter(self.options['resume'])
-        )
+        loop_counts = self.snapshot.get_inner_loop_counter(self.options['resume'])
         if loop_counts is None:
             return
 

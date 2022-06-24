@@ -1,7 +1,8 @@
 from aiaccel.optimizer.abstract_optimizer import AbstractOptimizer
 from aiaccel.optimizer.nelder_mead.sampler import NelderMeadSampler
 from typing import Optional
-
+import copy
+import numpy as np
 
 class NelderMeadSearchOptimizer(AbstractOptimizer):
     """An optimizer class with nelder mead algorithm.
@@ -62,15 +63,25 @@ class NelderMeadSearchOptimizer(AbstractOptimizer):
             self.sampler.update_ready_parameter_name(pool_p, name)
             self.sampler.add_order({'name': name, 'parameters': params})
 
-    def _serialize(self) -> None:
+    def _serialize(self) -> dict:
         """Serialize this module.
 
         Returns:
             dict: The serialized objects.
         """
+        parameter_pool = copy.deepcopy(self.parameter_pool)
+        for p_pool in parameter_pool:
+            for p_pool_param in p_pool['parameters']:
+                if type(p_pool_param['value']) is np.float64:
+                    p_pool_param['value'] = float(p_pool_param['value'])
+
         self.serialize_datas = {
+            'sampler': self.sampler,
             'loop_count': self.loop_count,
-            'sampler': self.sampler
+            'parameter_pool': parameter_pool,
+            'nelder_mead': self.sampler.nelder_mead.serialize(),
+            'generated_parameter': self.sampler.generated_parameter,
+            'order': self.sampler.order
         }
         return super()._serialize()
 
@@ -84,4 +95,15 @@ class NelderMeadSearchOptimizer(AbstractOptimizer):
             None
         """
         super()._deserialize(dict_objects)
+        parameter_pool = copy.deepcopy(dict_objects['parameter_pool'])
+        for p_pool in parameter_pool:
+            for p_pool_param in p_pool['parameters']:
+                if type(p_pool_param['value']) is float:
+                    p_pool_param['value'] = np.float64(p_pool_param['value'])
+
         self.sampler = dict_objects['sampler']
+        self.sampler.parameter_pool = parameter_pool
+        # self.nelder_mead = NelderMead(self.params.get_parameter_list())
+        self.sampler.nelder_mead.deserialize(dict_objects['nelder_mead'])
+        self.sampler.order = dict_objects['order']
+        self.sampler.generated_parameter = dict_objects['generated_parameter']

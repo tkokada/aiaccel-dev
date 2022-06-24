@@ -1,6 +1,7 @@
 from aiaccel.optimizer.abstract_optimizer import AbstractOptimizer
-from aiaccel.util.filesystem import get_file_hp_finished,\
-    interprocess_lock_file
+from aiaccel.util.filesystem import get_file_hp_finished
+from aiaccel.util.filesystem import interprocess_lock_file
+from aiaccel.optimizer.sobol.sampler import SobolSampler
 from sobol_seq import i4_sobol
 from typing import Optional
 import aiaccel
@@ -24,7 +25,7 @@ class SobolSearchOptimizer(AbstractOptimizer):
             config (str): A file name of a configuration.
         """
         super().__init__(options)
-        self.generate_index = None
+        self.sampler = SobolSampler(self.config)
 
     def pre_process(self) -> None:
         """Pre-procedure before executing processes.
@@ -33,10 +34,7 @@ class SobolSearchOptimizer(AbstractOptimizer):
             None
         """
         super().pre_process()
-        with fasteners.InterProcessLock(interprocess_lock_file((self.ws / aiaccel.dict_hp), self.dict_lock)):
-            files = get_file_hp_finished(self.ws)
-
-        self.generate_index = len(files)
+        self.sampler.initialize()
 
     def generate_parameter(self, number: Optional[int] = 1) -> None:
         """Generate parameters.
@@ -47,35 +45,19 @@ class SobolSearchOptimizer(AbstractOptimizer):
         Returns:
             None
         """
-        returned_params = []
-        l_params = self.params.get_parameter_list()
-        n_params = len(l_params)
-        initial_parameter = self.generate_initial_parameter()
 
+        params = []
+
+        initial_parameter = self.generate_initial_parameter()
         if initial_parameter is not None:
-            returned_params.append(initial_parameter)
+            params.append(initial_parameter)
             number -= 1
 
-        for n in range(number):
-            new_params = []
-            vec, seed = i4_sobol(n_params, self.generate_index)
-            self.generate_index = seed
+        for _ in range(number):
+            param = self.sampler.generate_parameter()
+            params.append(param)
 
-            for i in range(0, n_params):
-                min_value = l_params[i].lower
-                max_value = l_params[i].upper
-                value = (max_value - min_value) * vec[i] + min_value
-                new_param = {
-                    'parameter_name': l_params[i].name,
-                    'type': l_params[i].type,
-                    'value': float(value)
-                }
-                new_params.append(new_param)
-
-            returned_params.append({'parameters': new_params})
-            self.generated_parameter += 1
-
-        self.create_parameter_files(returned_params)
+        self.create_parameter_files(params)
 
     def _serialize(self) -> dict:
         """Serialize this module.
@@ -84,9 +66,10 @@ class SobolSearchOptimizer(AbstractOptimizer):
             dict: The serialized objects.
         """
         self.serialize_datas = {
-            'generated_parameter': self.generated_parameter,
-            'loop_count': self.loop_count,
-            'generate_index': self.generate_index
+            'sampler': self.sampler,
+            'generated_parameter': self.sampler.generated_parameter,
+            'generate_index': self.sampler.generate_index,
+            'loop_count': self.loop_count
         }
         return super()._serialize()
 
@@ -100,4 +83,6 @@ class SobolSearchOptimizer(AbstractOptimizer):
             None
         """
         super()._deserialize(dict_objects)
-        self.generate_index = dict_objects['generate_index']
+        self.sampler = dict_objects['sampler']
+        self.sampler.generated_parameter = dict_objects['generated_parameter']
+        self.sampler.generate_index = dict_objects['generate_index']
