@@ -1,10 +1,20 @@
-from aiaccel.util.name import generate_random_name
+import aiaccel
 from aiaccel.parameter import HyperParameter
+from aiaccel.parameter import load_parameter
+from aiaccel.util.name import generate_random_name
+from aiaccel.util.filesystem import get_basename
+from aiaccel.util.filesystem import get_file_hp_finished
+from aiaccel.util.filesystem import get_file_hp_ready
+from aiaccel.util.filesystem import get_file_hp_running
+from aiaccel.util.filesystem import get_file_result
+from aiaccel.util.filesystem import load_yaml
+from aiaccel.config import Config
 from typing import Dict, List, Optional, Union
 import copy
 import logging
 import numpy as np
 import random
+from pathlib import Path
 
 STATES = [
     'WaitInitialize',
@@ -20,10 +30,257 @@ STATES = [
     'WaitShrink'
 ]
 
-hptype = Union[
-    List[Dict[str, Union[str, Union[float, List[float]]]]],
-    None
-]
+hptype = Union[List[Dict[str, Union[str, Union[float, List[float]]]]], None]
+
+
+class NelderMeadSampler:
+    def __init__(self, config: Config):
+        self.config = config
+        self.logger = None
+        self.ws = Path(self.config.workspace.get()).resolve()
+        self.dict_lock = self.ws / aiaccel.dict_lock
+        self.params = load_parameter(self.config.hyperparameters.get())
+        self.nelder_mead = None
+        self.parameter_pool = None
+        self.order = []
+        self.generated_parameter = 0
+        self.logger = None
+
+    def set_logger(self, logger):
+        self.logger = logger
+
+    def generate_initial_parameter(self) -> Union[Dict[str, List[Dict[str, Union[str, Union[float, List[float]]]]]], None]:
+        """Generate a initial parameter.
+
+        Returns:
+            Union[Dict[str, List[Dict[str, Union[str, Union[float,
+                List[float]]]]], None]: A created initial parameter. It returns
+                None if any parameters are already created.
+        """
+        if self.generated_parameter == 0:
+            sample = self.params.sample(initial=True)
+            new_params = []
+
+            for s in sample:
+                new_param = {
+                    'parameter_name': s['name'],
+                    'type': s['type'],
+                    'value': s['value']
+                }
+                new_params.append(new_param)
+
+            if len(new_params) == len(self.params.get_parameter_list()):
+                self.generated_parameter += 1
+                return {'parameters': new_params}
+        return None
+
+    def initialize(self):
+        initial_parameter = self.generate_initial_parameter()
+        if self.nelder_mead is not None:
+            return
+
+        if initial_parameter is not None:
+            self.nelder_mead = NelderMead(
+                self.params.get_parameter_list(),
+                initial_parameters=initial_parameter['parameters']
+            )
+        else:
+            self.nelder_mead = NelderMead(self.params.get_parameter_list())
+        self.parameter_pool = []
+
+    def get_nm_results(self) -> list:
+        """ Get the list of Nelder-Mead result.
+
+        Returns:
+            list[dict]: Results per trial.
+        """
+        result_files = get_file_result(self.ws, self.dict_lock)
+        hashnames = [get_basename(f) for f in result_files]
+        nm_results = []
+        for p in self.nelder_mead._executing:
+            try:
+                index = hashnames.index(p['name'])
+            except ValueError:
+                continue
+            result_content = load_yaml(result_files[index], self.dict_lock)
+            nm_result = copy.copy(p)
+            nm_result['result'] = result_content['result']
+            nm_results.append(nm_result)
+        return nm_results
+
+    def add_result(self) -> None:
+        """  Add a result parameter.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        nm_results = self.get_nm_results()
+        if (
+            len(nm_results) == 0 or
+            len(self.order) == 0
+        ):
+            return
+
+        # Store results in order of HP file generation
+        order = self.order[0]
+        for nm_result in nm_results:
+            if order['name'] == nm_result['name']:
+                self.nelder_mead.add_result_parameters(nm_result)
+                self.order.pop(0)
+                break
+
+    def update_ready_parameter_name(
+        self,
+        pool_p: str,  # old_param_name
+        name: str     # new_param_name
+    ) -> None:
+        """ Update hyperparameter's names.
+
+        Args:
+            pool_p (str): old parameter name
+            name (str): New parameter name
+
+        Returns:
+            None
+
+        Note:
+            --------------------------------------------------------------
+            - befor
+            {
+                'name': 'CMTrNe5P8a',
+                'parameters': [
+                    {'parameter_name': 'x1', 'value': 3.37640289751353},
+                    {'parameter_name': 'x2', 'value': 1.6556037243290205}
+                ],
+                'state': 'WaitExpand',
+                'itr': 5,
+                'index': None,
+                'out_of_boundary': False
+            }
+            --------------------------------------------------------------
+            - after
+            {
+                'name': '000014',
+                'parameters': [
+                    {'parameter_name': 'x1', 'value': 3.37640289751353},
+                    {'parameter_name': 'x2', 'value': 1.6556037243290205}
+                ],
+                'state': 'WaitExpand',
+                'itr': 5,
+                'index': None,
+                'out_of_boundary': False
+            }
+            --------------------------------------------------------------
+        """
+        old_param_name = pool_p['name']
+        new_param_name = name
+        for e in self.nelder_mead._executing:
+            if e['name'] == old_param_name:
+                e['name'] = new_param_name
+                break
+
+    def nelder_mead_main(self) -> list:
+        """ Nelder Mead's main module.
+
+        Args:
+            None
+
+        Returns:
+            searched_params (list): Result of optimization.
+        """
+        searched_params = self.nelder_mead.search()
+        if searched_params is None:
+            self.logger.info('generate_parameter(): reached to max iteration.')
+            return None
+        if len(searched_params) == 0:
+            return None
+        return searched_params
+
+    def get_all_hashnames(self) -> list:
+        """get_all_hashnames.
+
+        Get hashname from dirs: 'result', 'finished', 'running', 'ready'
+
+        Returns:
+            List: hashname
+        """
+        result_files = get_file_result(self.ws, self.dict_lock)
+        finished_files = get_file_hp_finished(self.ws, self.dict_lock)
+        running_files = get_file_hp_running(self.ws, self.dict_lock)
+        ready_files = get_file_hp_ready(self.ws, self.dict_lock)
+        hashnames = [get_basename(f) for f in result_files]
+        hashnames += [get_basename(f) for f in finished_files]
+        hashnames += [get_basename(f) for f in running_files]
+        hashnames += [get_basename(f) for f in ready_files]
+        return hashnames
+
+    def get_current_names(self):
+        """ get parameter names.
+
+        Returns:
+            parameter names in parameter_pool (list)
+        """
+        # WARN: Always empty.
+        return [p['name'] for p in self.parameter_pool]
+
+    def get_parameter_pool(self):
+        return copy.deepcopy(self.parameter_pool)
+
+    def add_order(self, order: dict):
+        # {
+        #     'name': name,
+        #     'parameters': self.new_params
+        # }
+        self.order.append(order)
+
+    def pop_parameter_pool(self, index):
+        pool_p = self.parameter_pool.pop(index)
+        return pool_p
+
+    def search(self) -> list:
+        self.add_result()
+        searched_params = self.nelder_mead.search()
+        if searched_params is None:
+            self.logger.info('generate_parameter(): reached to max iteration.')
+            return None
+        if len(searched_params) == 0:
+            return None
+
+        for p in searched_params:
+            if (
+                p['name'] not in self.get_all_hashnames() and
+                p['name'] not in self.get_current_names()
+            ):
+                self.parameter_pool.append(copy.copy(p))
+        return searched_params
+
+    def generate_parameter(self) -> list:
+        params = []
+        pool_p = self.parameter_pool.pop(0)
+
+        for param in self.params.get_parameter_list():
+            i = [p['parameter_name'] for p in pool_p['parameters']].index(param.name)
+
+            if param.type.lower() == 'float':
+                value = float(pool_p['parameters'][i]['value'])
+            elif param.type.lower() == 'int':
+                value = int(pool_p['parameters'][i]['value'])
+            else:
+                raise TypeError(
+                    f'Invalid parameter type for NelderMeadSearch.\
+                        FLOAT or INT is required, but {param.type} is given.'
+                )
+            params.append(
+                {
+                    'parameter_name': param.name,
+                    'type': param.type,
+                    'value': value
+                }
+            )
+        return params
 
 
 class NelderMead(object):
@@ -91,10 +348,7 @@ class NelderMead(object):
         if initial_parameters is not None:
             self.y = np.array(
                 [
-                    [
-                        random.random() * (b[1] - b[0]) + b[0]
-                        for b in self.bdrys
-                    ]
+                    [random.random() * (b[1] - b[0]) + b[0]for b in self.bdrys]
                     for _ in range(n_dim + 1)
                 ]
             )
@@ -115,10 +369,7 @@ class NelderMead(object):
         else:
             self.y = np.array(
                 [
-                    [
-                        random.random() * (b[1] - b[0]) + b[0]
-                        for b in self.bdrys
-                    ]
+                    [random.random() * (b[1] - b[0]) + b[0]for b in self.bdrys]
                     for _ in range(n_dim + 1)
                 ]
             )
@@ -695,9 +946,7 @@ class NelderMead(object):
                 elif type(v) is np.int64:
                     value.append(int(v))
                 else:
-                    print(
-                        'nm serialize history key: ', key, ', type: ', type(v)
-                    )
+                    print('nm serialize history key: ', key, ', type: ', type(v))
                     value.append(v)
             history[key] = value
 
