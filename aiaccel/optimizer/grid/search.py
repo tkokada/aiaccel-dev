@@ -57,8 +57,7 @@ class GridSearchOptimizer(AbstractOptimizer):
             dict: The serialized objects.
         """
         self.serialize_datas = {
-            'loop_count': self.loop_count,
-            'sampler': self.sampler
+            'loop_count': self.loop_count
         }
         return super()._serialize()
 
@@ -72,4 +71,3 @@ class GridSearchOptimizer(AbstractOptimizer):
             None
         """
         super()._deserialize(dict_objects)
-        self.sampler = dict_objects['sampler']

@@ -49,6 +49,9 @@ class NelderMeadSampler:
     def set_logger(self, logger):
         self.logger = logger
 
+    def set_parameter_pool(self, parameter_pool:list):
+        self.parameter_pool = copy.deepcopy(parameter_pool)
+
     def generate_initial_parameter(self) -> Union[Dict[str, List[Dict[str, Union[str, Union[float, List[float]]]]]], None]:
         """Generate a initial parameter.
 
@@ -280,7 +283,7 @@ class NelderMeadSampler:
                     'value': value
                 }
             )
-        return params
+        return params, pool_p
 
 
 class NelderMead(object):

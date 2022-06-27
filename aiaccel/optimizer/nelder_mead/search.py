@@ -4,6 +4,7 @@ from typing import Optional
 import copy
 import numpy as np
 
+
 class NelderMeadSearchOptimizer(AbstractOptimizer):
     """An optimizer class with nelder mead algorithm.
 
@@ -44,14 +45,13 @@ class NelderMeadSearchOptimizer(AbstractOptimizer):
             TypeError: Causes when an invalid parameter type is set.
         """
         self.sampler.search()
-        for _ in range(number):
-            pool_p = self.sampler.pop_parameter_pool(0)
 
+        for _ in range(number):
             if len(self.sampler.get_parameter_pool()) == 0:
                 self.logger.info('All parameters in pool has been generated.')
                 break
 
-            params = self.sampler.generate_parameter()
+            params, pool_p = self.sampler.generate_parameter()
             # Note: params
             # [
             #   {'parameter_name': param.name, 'type': param.type, 'value': value},
@@ -69,14 +69,13 @@ class NelderMeadSearchOptimizer(AbstractOptimizer):
         Returns:
             dict: The serialized objects.
         """
-        parameter_pool = copy.deepcopy(self.parameter_pool)
+        parameter_pool = copy.deepcopy(self.sampler.parameter_pool)
         for p_pool in parameter_pool:
             for p_pool_param in p_pool['parameters']:
                 if type(p_pool_param['value']) is np.float64:
                     p_pool_param['value'] = float(p_pool_param['value'])
 
         self.serialize_datas = {
-            'sampler': self.sampler,
             'loop_count': self.loop_count,
             'parameter_pool': parameter_pool,
             'nelder_mead': self.sampler.nelder_mead.serialize(),
@@ -96,14 +95,14 @@ class NelderMeadSearchOptimizer(AbstractOptimizer):
         """
         super()._deserialize(dict_objects)
         parameter_pool = copy.deepcopy(dict_objects['parameter_pool'])
+        print(type(parameter_pool))
         for p_pool in parameter_pool:
             for p_pool_param in p_pool['parameters']:
                 if type(p_pool_param['value']) is float:
                     p_pool_param['value'] = np.float64(p_pool_param['value'])
 
-        self.sampler = dict_objects['sampler']
-        self.sampler.parameter_pool = parameter_pool
-        # self.nelder_mead = NelderMead(self.params.get_parameter_list())
+        self.sampler.initialize()
+        self.sampler.set_parameter_pool(parameter_pool)
         self.sampler.nelder_mead.deserialize(dict_objects['nelder_mead'])
         self.sampler.order = dict_objects['order']
         self.sampler.generated_parameter = dict_objects['generated_parameter']

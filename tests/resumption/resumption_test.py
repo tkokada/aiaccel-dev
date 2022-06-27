@@ -50,6 +50,7 @@ class ResumptionTest(IntegrationTest):
             "5"
         ]
         run_master(commandline_args, work_dir)
+        wait_alive(work_dir)
         final_result_resumption = get_final_result(work_dir)
         print('resumption steps finished', final_result_resumption)
         assert final_result_at_one_time == final_result_resumption

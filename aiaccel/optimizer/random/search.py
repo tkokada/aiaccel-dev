@@ -4,6 +4,7 @@ from typing import Optional
 import copy
 import numpy as np
 
+
 class RandomSearchOptimizer(AbstractOptimizer):
     """An optimizer class with a random algorithm.
 
@@ -60,7 +61,6 @@ class RandomSearchOptimizer(AbstractOptimizer):
             dict: serialize data.
         """
         self.serialize_datas = {
-            'sampler': self.sampler,
             'generated_parameter': self.sampler.generated_parameter,
             'loop_count': self.loop_count
         }
@@ -76,5 +76,4 @@ class RandomSearchOptimizer(AbstractOptimizer):
             None
         """
         super()._deserialize(dict_objects)
-        self.sampler = dict_objects['sampler']
         self.sampler.generated_parameter = dict_objects['generated_parameter']

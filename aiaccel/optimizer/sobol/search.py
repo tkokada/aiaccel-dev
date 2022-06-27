@@ -66,7 +66,6 @@ class SobolSearchOptimizer(AbstractOptimizer):
             dict: The serialized objects.
         """
         self.serialize_datas = {
-            'sampler': self.sampler,
             'generated_parameter': self.sampler.generated_parameter,
             'generate_index': self.sampler.generate_index,
             'loop_count': self.loop_count
@@ -83,6 +82,5 @@ class SobolSearchOptimizer(AbstractOptimizer):
             None
         """
         super()._deserialize(dict_objects)
-        self.sampler = dict_objects['sampler']
         self.sampler.generated_parameter = dict_objects['generated_parameter']
         self.sampler.generate_index = dict_objects['generate_index']
