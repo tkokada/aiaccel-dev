@@ -1,4 +1,3 @@
-<hr>
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
@@ -35,9 +34,6 @@
   - [resourceの設定](#resourceの設定)
   - [ABCIの設定](#abciの設定)
   - [job_script_preamble.sh](#job_script_preamblesh)
-- [補助ツールについて](#補助ツールについて)
-- [補助ツールの機能概要](#補助ツールの機能概要)
-- [謝辞](#謝辞)
 
 <!-- /code_chunk_output -->
 
@@ -50,7 +46,7 @@
   - python 3 (3.8.13以上)
 ## 1. ABCIの準備
 ABCIのセットアップは下記資料を参考ください。
-http://upat.jp/rs/2019/10/08/abci%E5%85%A5%E9%96%80/
+https://docs.abci.ai/ja/
 
 ---
 ## 2. Python-venvによる仮想環境の作成
@@ -82,7 +78,7 @@ python3 -m venv optenv
 ## 3. インストール
 aiaccelをダウンロードします。
 ~~~bash
-> git clone https://gitlab.com/onishi-lab/opt
+> git clone https://github.com/aistairc/aiaccel.git
 ~~~
 ダウンロード完了後、aiaccelフォルダに移動します。
 ~~~bash
@@ -158,6 +154,7 @@ generic:
 - **batch_job_timeout** - jobのタイムアウト時間を設定します。[単位: 秒]
     - ご注意
       - プロジェクトファイル直下に任意のworkspaceを指定することを推奨します。
+
 ---
 ### resource
 **サンプル**
@@ -179,7 +176,7 @@ ABCI:
   job_script_preamble: "./job_script_preamble.sh"
   job_execution_options: ""
 ```
-- **job_script_preamble** - ABCIが実行するシェルスクリプト名を指定します。詳細は後述します。
+- **job_script_preamble** - ABCI上でソフトウェアを実行するためのラッパーシェルスクリプトです。詳細は後述します。
 - **group** - 自分が所属しているABCIグループ名を指定します。([]は記述不要です。)
 
 
@@ -207,7 +204,7 @@ optimize:
       initial: 1.0
 ```
 - **search_algorithm** - 最適化アルゴリズム[*1]を指定します。
-- **goal** - 最適化の方向を設定します。
+- **goal** - 最適化の方向を設定します。[minimize | maximize]
 - **trial_number** - 試行回数を設定します。
   - ご注意
     - trial_numberは最適化モデルの実行回数を指定します。例として、Nelder-Meadを使用する場合、ハイパラが2変数のとき一回の評価で最低3点を評価する必要があります。この場合はtrial_numberを3に指定します。
@@ -223,9 +220,9 @@ optimize:
   - **lower** - ハイパーパラメータ最小値を設定します。
   - **upper** - ハイパーパラメータ最大値を設定します。
   - **initial** - ハイパーパラメータの初期値を設定します。
-  - **step**  - ハイパーパラメータの分解能を設定します。最適化アルゴリズムがgridの場合は必ず指定してください。
-  - **log** - 対数設定用の項目です。最適化アルゴリズムがgridの場合は必ず指定してください。
-  - **base** - 対数設定用の項目です。最適化アルゴリズムがgridの場合は必ず指定してください。
+  - **step**  - ハイパーパラメータの分解能を設定します(最適化アルゴリズムがgridの場合は必ず指定してください。)。
+  - **log** - 対数設定用の項目です(最適化アルゴリズムがgridの場合は必ず指定してください。)。
+  - **base** - 対数設定用の項目です(最適化アルゴリズムがgridの場合は必ず指定してください。)。
   - **comment** - 自由記述欄。
 
 
@@ -236,7 +233,7 @@ optimize:
   - **random** - ハイパーパラメータの値をランダムに生成します。
   - **grid** - ハイパーパラメータの値を一定間隔でサンプリングします。
   - **sobol** - Sobol列を用いてハイパーパラメータの値を生成します。
-  - **nelder-mead** - ヒューリスティクスな最適化アルゴリズムです。
+  - **nelder-mead** - ヒューリスティクスな最適化アルゴリズムです.
   - **tpe** - ベイズ最適化による最適化アルゴリズムです。
 
 <br>
@@ -298,7 +295,7 @@ parameters:
   choices: ['green', 'red', 'yellow', 'blue']
 ```
 - ご注意
-  - categorial使用時は`choices`項目を使用します。`choices`は配列で指定する必要があります。
+  - categorial使用時は`choices`項目を使用します.`choices`は配列で指定する必要があります。
   - catogoricalを使用できるのは、最適化アルゴリズムが`RandomSearch`と`TPE`の場合のみです。
 
 ##### Type: ordinalの記述例
@@ -366,7 +363,7 @@ parameters:
   upper: 5
   initial: [2, 4, 1]
 ```
-また、`initial`を使用しない場合は、空のリストを指定します。
+また、`initial`を使用しない場合は、空のリストを指定します.
 ```yaml
 parameters:
 -
@@ -455,7 +452,7 @@ def func(x1, x2):
 
 これを、aiaccelで最適化させるには次のように変更します。
 ```python
-from aiaccel.util import aiaccel
+from aiaccel.util import opt
 
 def func(p):
     x1 = p["x1"]
@@ -465,7 +462,7 @@ def func(p):
 
 if __name__ == "__main__":
     
-    run = aiaccel.Run()
+    run = opt.Run()
     run.execute_and_report(func)
 ```
 
@@ -488,7 +485,7 @@ run = aiaccel.Run()
 # commandにユーザープログラムを実行するためのコマンドを記述してください。
 # コマンドライン引数は自動で生成します。
 #  --config
-#  --trial_id
+#  --index
 #  --x1 (例) 
 #  --・・・
 run.execute_and_report("python user.py")
@@ -611,26 +608,3 @@ ABCI:
 
 <br>
 <hr>
-
-# 補助ツールについて
-
-ABCI上でaiaccelを使用する際、aiaccelの補助ツール(wd)を使用できます。<br>
-試作中につき機能は制限していますが、必要ならば是非ともご利用ください。<br>
-詳細は[wd_dev/README_JP.md]をご参照ください。
-
-
-# 補助ツールの機能概要
-
-1. ABCI上でaiaccelを使用するためのCUI機能を利用できます。
-2. ABCIのポイント消費量を最大で約25%抑えることができます。
-
-[wd_dev/README_JP.md]:wd_dev/README_JP.md
-
-<br>
-<hr>
-
-
-# 謝辞
-
-この成果の一部は、国立研究開発法人新エネルギー・産業技術総合開発機構(NEDO)の委託業務として開発されたものです。<BR>
-TPEアルゴリズムは Optuna を利用しました。
