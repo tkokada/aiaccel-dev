@@ -26,6 +26,6 @@ jobs:
         run: |
           pip install -r requirements.txt
           python setup.py install
-          ls -al
-          pytest -s -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit/test_buffer.py
-          ls -al
+          pytest -s -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit
+          pytest -s -v --pycodestyle aiaccel examples
+          pytest -s -v --flake8 aiaccel examples
