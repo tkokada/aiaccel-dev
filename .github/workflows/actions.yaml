@@ -26,5 +26,5 @@ jobs:
         run: |
           python setup.py install
           ls -al
-          python -m pytest -s -v --cov=aiaccel ==cov-report=term-missing tests/unit/test_buffer.py
+          pytest -s -v --cov=aiaccel ==cov-report=term-missing tests/unit/test_buffer.py
           ls -al
