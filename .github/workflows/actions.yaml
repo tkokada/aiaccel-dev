@@ -24,6 +24,7 @@ jobs:
 
       - name: Install
         run: |
+          pip install -r requirements.txt
           python setup.py install
           ls -al
           pytest -s -v --cov=aiaccel ==cov-report=term-missing tests/unit/test_buffer.py
