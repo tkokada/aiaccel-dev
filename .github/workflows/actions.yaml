@@ -20,15 +20,11 @@ jobs:
           python3.8 -m venv env
           source env/bin/activate
           echo "VIRTUAL ENV:" $VIRTUAL_ENV
-          pip install -r requirements.txt
           ls -al
 
       - name: Install
         run: |
           python setup.py install
           ls -al
-
-      - name:
-        run: |
           python -m pytest -s -v --cov=aiaccel ==cov-report=term-missing tests/unit/test_buffer.py
           ls -al
