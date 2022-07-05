@@ -32,10 +32,31 @@ jobs:
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
 
       - name: Unit test
-        run: . ./.venv/bin/activate && pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit
+        run: . ./.venv/bin/activate && pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit --junit-xml results/pytest.xml
+        continue-on-error: true
 
       - name: Pycodestyle
         run: . ./.venv/bin/activate && pytest -v --pycodestyle aiaccel examples
+        continue-on-error: true
 
       - name: Flack8
         run: . ./.venv/bin/activate && pytest -v --flake8 aiaccel examples
+        continue-on-error: true
+
+      - name: Upload unit test results
+        if: $${ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: Unit test results (Python 3.8)
+          path: results/*.xml
+
+      - name: Download artifacts
+        if: success() || failure()
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+
+      - name: Publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        with:
+          files: artifacts/**/*.xml
