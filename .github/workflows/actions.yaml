@@ -32,7 +32,8 @@ jobs:
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
 
       - name: Unit test
-        run: . ./.venv/bin/activate && pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit --junit-xml results/pytest.xml
+        #run: . ./.venv/bin/activate && pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit --junit-xml results/pytest.xml
+        run: . ./.venv/bin/activate && pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit/test_buffer.py --junit-xml results/pytest.xml
         continue-on-error: true
 
       - name: Pycodestyle
@@ -41,6 +42,26 @@ jobs:
 
       - name: Flack8
         run: . ./.venv/bin/activate && pytest -v --flake8 aiaccel examples
+        continue-on-error: true
+
+      - name: Random optimizer test
+        run: pytest -s -v tests/integration/sphere/test_sphere_random.py
+        continue-on-error: true
+
+      - name: Grid optimizer test
+        run: pytest -s -v tests/integration/sphere/test_sphere_grid.py
+        continue-on-error: true
+
+      - name: Sobol optimizer test
+        run: pytest -s -v tests/integration/sphere/test_sphere_sobol.py
+        continue-on-error: true
+
+      - name: TPE optimizer test
+        run: pytest -s -v tests/integration/sphere/test_sphere_tpe.py
+        continue-on-error: true
+
+      - name: Nelder-mead optimizer test
+        run: pytest -s -v tests/integration/sphere/test_sphere_nelder_mead.py
         continue-on-error: true
 
       - name: Upload unit test results
