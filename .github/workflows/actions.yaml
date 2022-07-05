@@ -32,7 +32,6 @@ jobs:
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
 
       - name: Unit test
-        #run: . ./.venv/bin/activate && pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit --junit-xml results/pytest.xml
         run: . ./.venv/bin/activate && pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit/test_buffer.py --junit-xml results/pytest.xml
         continue-on-error: true
 
