@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 on: [push, pull_request]
 
 jobs:
@@ -27,8 +27,10 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          python3.8 -m venv .venv && . ./.venv/bin/activate &&
-          pip install -r requirements.txt && python setup.py install
+          python3.8 -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+          python setup.py install
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
 
       - name: Unit test
