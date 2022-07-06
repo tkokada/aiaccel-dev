@@ -38,7 +38,7 @@ jobs:
         continue-on-error: true
 
       - name: Search algorithm ${{ matrix.search-algorithm }} Test
-        run: pytest -v tests/integration/sphere/test_sphere_$${{ matrix.search-algorithm }}.py
+        run: pytest -v tests/integration/sphere/test_sphere_${{ matrix.search-algorithm }}.py
 
   publish-test-results:
     name: "Publish Tests Results"
