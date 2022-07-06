@@ -6,7 +6,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        #os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         python-version: ['3.8']
         search-algorithm: ['random', 'grid', 'sobol', 'tpe', 'nelder_mead']
     steps:
@@ -39,6 +40,9 @@ jobs:
 
       - name: Search algorithm ${{ matrix.search-algorithm }} Test
         run: pytest -v tests/integration/sphere/test_sphere_${{ matrix.search-algorithm }}.py
+
+      - name: Resume algorithm ${{ matrix.search-algorithm }} Test
+        run: pytest -v tests/resumption/sphere/test_sphere_${{ matrix.search-algorithm }}_resumption.py
 
   publish-test-results:
     name: "Publish Tests Results"
