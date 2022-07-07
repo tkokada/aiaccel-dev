@@ -46,14 +46,14 @@ jobs:
 
       - name: Search algorithm Test
         run: |
-          for search-algorithm in ['random', 'grid', 'sobol', 'tpe', 'nelder_mead']; do
-            pytest -v tests/integration/sphere/test_sphere_$search-algorithm.py
+          for SEARCH_ALGORITHM in random grid sobol tpe nelder_mead; do
+            pytest -v tests/integration/sphere/test_sphere_$SEARCH_ALGORITHM.py
           done
 
       - name: Resume Test
         run: |
-          for search-algorithm in ['random', 'grid', 'sobol', 'tpe', 'nelder_mead']; do
-            pytest -v tests/resumption/sphere/test_sphere_$search-algorithm_resumption.py
+          for SEARCH_ALGORITHM in random grid sobol tpe nelder_mead; do
+            pytest -v tests/resumption/sphere/test_sphere_$SEARCH_ALGORITHM_resumption.py
           done
 
   publish-test-results:
