@@ -45,14 +45,11 @@ jobs:
         continue-on-error: true
 
       - name: Search algorithm Test
+        env:
+          SEARCH_ALGORITHMS: random grid sobol tpe nelder_mead
         run: |
-          for SEARCH_ALGORITHM in random grid sobol tpe nelder_mead; do
+          for SEARCH_ALGORITHM in $SEARCH_ALGORITHMS; do
             pytest -v tests/integration/sphere/test_sphere_$SEARCH_ALGORITHM.py
-          done
-
-      - name: Resume Test
-        run: |
-          for SEARCH_ALGORITHM in random grid sobol tpe nelder_mead; do
             pytest -v tests/resumption/sphere/test_sphere_$SEARCH_ALGORITHM_resumption.py
           done
 
