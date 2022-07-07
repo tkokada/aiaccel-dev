@@ -45,6 +45,15 @@ jobs:
         run: pytest -v --flake8 aiaccel examples
         continue-on-error: true
 
+  integration-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        #os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
+        python-version: ['3.8']
+        search-algorithm: ['random', 'grid', 'sobol', 'tpe', 'nelder_mead']
+    steps:
       - name: Search algorithm ${{ matrix.search-algorithm }} Test
         run: pytest -v tests/integration/sphere/test_sphere_${{ matrix.search-algorithm }}.py
 
