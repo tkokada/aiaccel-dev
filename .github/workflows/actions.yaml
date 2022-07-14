@@ -27,4 +27,16 @@ jobs:
           python setup.py install
 
       - name: Unit Test
-        run: pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit/common.py --junit-xml pytest-${{ matrix.os }}-${{ matrix.python-version }}.xml
+        run: |
+          pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit/test_buffer.py
+          pwd
+          ls
+          ls /home/runner
+          ls /home/runner/work
+          ls /home/runner/work/aiaccel-dev
+          ls /home/runner/work/aiaccel-dev/aiaccel-dev
+          ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests
+          ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data
+          ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work
+          ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work/state
+          pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit/test_common.py
