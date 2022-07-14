@@ -44,6 +44,8 @@ jobs:
           ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests
           echo 'ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data'
           ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data
+          echo 'ls /tmp'
+          ls /tmp
           echo 'ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work'
           ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work
           echo 'ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work/state'
