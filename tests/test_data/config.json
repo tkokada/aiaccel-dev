@@ -7,7 +7,7 @@
     "project_name": "sphere",
     "randseed": 1,
     "silent_mode": false,
-    "workspace": ".",
+    "workspace": "/tmp/work",
     "job_command": "python wrapper.py"
   },
   "resource": {
