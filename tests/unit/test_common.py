@@ -22,7 +22,6 @@ def test_get_file_random(data_dir):
         assert True
 
     state_dir = data_dir.joinpath('work', aiaccel.dict_state)
-    print('state_dir', state_dir)
     assert get_file_random(state_dir, 'Optimizer', 1, 'native_random').exists()
     assert get_file_random(state_dir, 'Optimizer', 1, 'numpy_random').exists()
     assert get_file_random(state_dir, 'Optimizer', 1, 'configspace').exists()
