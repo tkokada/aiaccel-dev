@@ -46,8 +46,4 @@ jobs:
           ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data
           echo 'ls /tmp'
           ls /tmp
-          echo 'ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work'
-          ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work
-          echo 'ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work/state'
-          ls /home/runner/work/aiaccel-dev/aiaccel-dev/tests/test_data/work/state
           pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit/test_common.py
