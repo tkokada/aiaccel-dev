@@ -1,5 +1,3 @@
-
-
 name: CI
 on: [push, pull_request]
 
@@ -9,7 +7,7 @@ jobs:
     strategy:
       matrix:
         #os: [ubuntu-latest, macos-latest, windows-latest]
-        os: [ubuntu-20.04]
+        os: [ubuntu-latest]
         #python-version: ['3.8', '3.9', '3.10']
         python-version: ['3.8']
     steps:
@@ -27,9 +25,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python setup.py install
+
       - name: Unit Test
         run: pytest -v --cov=aiaccel --cov-branch --cov-report=term-missing tests/unit --junit-xml pytest-${{ matrix.os }}-${{ matrix.python-version }}.xml
-        continue-on-error: true
 
       - name: Upload Test Results
         if: always()
@@ -40,11 +38,9 @@ jobs:
 
       - name: Pycodestyle Test
         run: pytest -v --pycodestyle aiaccel examples
-        continue-on-error: true
 
       - name: Flack8 Test
         run: pytest -v --flake8 aiaccel examples
-        continue-on-error: true
 
       - name: Optimizer Algorithm Test
         run: |
@@ -53,7 +49,6 @@ jobs:
           pytest -v tests/integration/sphere/test_sphere_sobol.py
           pytest -v tests/integration/sphere/test_sphere_tpe.py
           pytest -v tests/integration/sphere/test_sphere_nelder_mead.py
-        continue-on-error: true
 
       - name: Resume Test
         run: |
@@ -62,7 +57,6 @@ jobs:
           pytest -v tests/resumption/sphere/test_sphere_sobol_resumption.py
           pytest -v tests/resumption/sphere/test_sphere_tpe_resumption.py
           pytest -v tests/resumption/sphere/test_sphere_nelder_mead_resumption.py
-        continue-on-error: true
 
   publish-test-results:
     name: "Publish Tests Results"
@@ -74,11 +68,6 @@ jobs:
       # only needed unless run with comment_mode: off
       pull-requests: write
 
-      # only needed for private repository
-      contents: read
-
-      # only needed for private repository
-      issues: read
     if: always()
 
     steps:
