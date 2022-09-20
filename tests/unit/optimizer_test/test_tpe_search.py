@@ -1,12 +1,12 @@
 import pytest
 from aiaccel.config import Config
 from aiaccel.parameter import load_parameter
-from aiaccel.optimizer.tpe.search import TpeSearchOptimizer
+from aiaccel.optimizer.tpe.search import TpeOptimizer
 from aiaccel.optimizer.tpe.search import create_distributions
 from tests.base_test import BaseTest
 
 
-class TestTpeSearchOptimizer(BaseTest):
+class TestTpeOptimizer(BaseTest):
 
     @pytest.fixture(autouse=True)
     def setup_optimizer(self, clean_work_dir, data_dir):
@@ -14,12 +14,11 @@ class TestTpeSearchOptimizer(BaseTest):
             'config': data_dir / 'config_tpe.json',
             'resume': None,
             'clean': False,
-            'nosave': False,
-            'dbg': False,
-            'graph': False,
+            'fs': False,
             'process_name': 'optimizer'
         }
-        self.optimizer = TpeSearchOptimizer(options)
+        self.optimizer = TpeOptimizer(options)
+        self.optimizer.storage.alive.init_alive()
         yield
         self.optimizer = None
 
@@ -45,21 +44,23 @@ class TestTpeSearchOptimizer(BaseTest):
     def test_create_study(self):
         assert self.optimizer.create_study() is None
 
-    def test_study_pickle_path(self):
-        assert self.optimizer.study_pickle_path.name == 'study.pkl'
-
     def test_serialize(self):
-        assert self.optimizer._serialize() == {}
+        self.optimizer.trial_id.initial(num=0)
+        self.optimizer.storage.trial.set_any_trial_state(trial_id=0, state="ready")
+        assert self.optimizer._serialize() is None
 
     def test_deserialize(self):
         self.optimizer.pre_process()
         self.optimizer.serialize_datas = {
-            'generated_parameter': None,
-            'loop_count': 0
+            'num_of_generated_parameter': None,
+            'loop_count': 0,
+            'parameter_pool': None,
+            'study': None
         }
+        self.optimizer.trial_id.initial(num=0)
+        self.optimizer.storage.trial.set_any_trial_state(trial_id=0, state="finished")
         self.optimizer._serialize()
-        serialized_dict = self.optimizer.serialize_datas
-        assert self.optimizer._deserialize(serialized_dict) is None
+        assert self.optimizer._deserialize(trial_id=0) is None
 
 
 def test_create_distributions(data_dir):

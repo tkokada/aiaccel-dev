@@ -1,8 +1,8 @@
-from aiaccel.optimizer.abstract_optimizer import AbstractOptimizer
+from aiaccel.optimizer.abstract import AbstractOptimizer
 from typing import Optional
 
 
-class RandomSearchOptimizer(AbstractOptimizer):
+class RandomOptimizer(AbstractOptimizer):
     """An optimizer class with a random algorithm.
 
     """
@@ -17,12 +17,12 @@ class RandomSearchOptimizer(AbstractOptimizer):
             None
         """
 
-        returned_params = []
-        self.get_dict_state()
+        self.get_each_state_count()
         initial_parameter = self.generate_initial_parameter()
 
         if initial_parameter is not None:
-            returned_params.append(initial_parameter)
+            self.register_ready(initial_parameter)
+            self._serialize()
             number -= 1
 
         for i in range(number):
@@ -37,10 +37,9 @@ class RandomSearchOptimizer(AbstractOptimizer):
                 }
                 new_params.append(new_param)
 
-            returned_params.append({'parameters': new_params})
-            self.generated_parameter += 1
-
-        self.create_parameter_files(returned_params)
+            self.num_of_generated_parameter += 1
+            self.register_ready({'parameters': new_params})
+            self._serialize()
 
     def _serialize(self) -> dict:
         """Serialize this module.
@@ -49,12 +48,17 @@ class RandomSearchOptimizer(AbstractOptimizer):
             dict: serialize data.
         """
         self.serialize_datas = {
-            'generated_parameter': self.generated_parameter,
+            'num_of_generated_parameter': self.num_of_generated_parameter,
             'loop_count': self.loop_count
         }
-        return super()._serialize()
+        self.serialize.serialize(
+            trial_id=self.trial_id.integer,
+            optimization_variables=self.serialize_datas,
+            native_random_state=self.get_native_random_state(),
+            numpy_random_state=self.get_numpy_random_state()
+        )
 
-    def _deserialize(self, dict_objects: dict) -> None:
+    def _deserialize(self, trial_id: int) -> None:
         """ Deserialize this module.
 
         Args:
@@ -63,4 +67,10 @@ class RandomSearchOptimizer(AbstractOptimizer):
         Returns:
             None
         """
-        super()._deserialize(dict_objects)
+        d = self.serialize.deserialize(trial_id)
+        self.deserialize_datas = d['optimization_variables']
+        self.set_native_random_state(d['native_random_state'])
+        self.set_numpy_random_state(d['numpy_random_state'])
+
+        self.num_of_generated_parameter = self.deserialize_datas['num_of_generated_parameter']
+        self.loop_count = self.deserialize_datas['loop_count']
