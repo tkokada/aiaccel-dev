@@ -129,23 +129,3 @@ msgstr ""
 msgid "Module contents"
 msgstr ""
 
-#~ msgid "Bases: :py:class:`object`"
-#~ msgstr ""
-
-#~ msgid "Parameters"
-#~ msgstr ""
-
-#~ msgid "Returns"
-#~ msgstr ""
-
-#~ msgid "Raises"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Bases: "
-#~ ":py:class:`~aiaccel.scheduler.algorithm.abstract_scheduling_algorithm.AbstractSchedulingAlgorithm`"
-#~ msgstr ""
-
-#~ msgid "Return type"
-#~ msgstr ""
-
