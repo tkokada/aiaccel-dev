@@ -1,6 +1,5 @@
-from aiaccel import workspace
 from aiaccel.config import ConfileWrapper, Config
-from aiaccel.master.abstract import AbstractMaster
+from aiaccel.master.abstract_master import AbstractMaster
 from aiaccel.util.filesystem import get_dict_files
 from aiaccel.util.time_tools import get_time_now_object
 from tests.base_test import BaseTest
@@ -13,10 +12,6 @@ import subprocess
 import time
 from pathlib import Path
 import sys
-from aiaccel.master.create import create_master
-from aiaccel.argument import Arguments
-from aiaccel.workspace import Workspace
-from functools import wraps
 
 
 async def loop_pre_process(master):
@@ -28,13 +23,15 @@ async def delay_make_directory(sleep_time, d):
     loop = asyncio.get_event_loop()
     await loop.run_in_executor(None, time.sleep, sleep_time)
     os.mkdir(d)
+
+
+def callback_module():
     time.sleep(10)
     return
 
 
 def callback_return():
     return
-
 
 
 class TestAbstractMaster(BaseTest):
@@ -44,10 +41,8 @@ class TestAbstractMaster(BaseTest):
         cd_work,
         clean_work_dir,
         config_json,
-        work_dir,
-        database_remove
+        work_dir
     ):
-        database_remove()
         commandline_args = [
             "start.py",
             "--config",
@@ -55,15 +50,27 @@ class TestAbstractMaster(BaseTest):
         ]
 
         with patch.object(sys, 'argv', commandline_args):
-            options = Arguments()
-            master = AbstractMaster(options)
+            from aiaccel import start
+            master = start.Master()
+        # master = AbstractMaster(options)
+        work_dir.joinpath(aiaccel.dict_runner).rmdir()
         loop = asyncio.get_event_loop()
         gather = asyncio.gather(
-            loop_pre_process(master)
+            loop_pre_process(master),
+            delay_make_directory(1, work_dir.joinpath(aiaccel.dict_runner))
         )
         loop.run_until_complete(gather)
-        master.worker_o.kill()
-        master.worker_s.kill()
+
+        alive_files = get_dict_files(work_dir.joinpath('alive'), '*.yml')
+
+        for f in alive_files:
+            os.remove(f)
+
+        if master.scheduler_proc is not None:
+            master.scheduler_proc.wait()
+
+        if master.optimizer_proc is not None:
+            master.optimizer_proc.wait()
 
     def test_pre_process_2(
         self,
@@ -71,18 +78,16 @@ class TestAbstractMaster(BaseTest):
         clean_work_dir,
         config_json,
         fake_process,
-        work_dir,
-        database_remove
+        work_dir
     ):
-        database_remove()
         commandline_args = [
             "start.py",
             "--config",
             format(config_json)
         ]
         with patch.object(sys, 'argv', commandline_args):
-            options = Arguments()
-            master = AbstractMaster(options)
+            from aiaccel import start
+            master = start.Master()
         master.start_optimizer()
         master.start_scheduler()
 
@@ -126,6 +131,20 @@ class TestAbstractMaster(BaseTest):
         # master.th_scheduler.abort()
         master.worker_o.kill()
         master.worker_s.kill()
+        alive_files = get_dict_files(work_dir.joinpath('alive'), '*.yml')
+
+        for f in alive_files:
+            os.remove(f)
+
+        '''
+        if master.scheduler_proc is not None:
+            #master.scheduler_proc.wait()
+            master.scheduler_proc.kill()
+
+        if master.optimizer_proc is not None:
+            #master.optimizer_proc.wait()
+            master.optimizer_proc.kill()
+        '''
 
     def test_pre_process_3(
         self,
@@ -133,65 +152,69 @@ class TestAbstractMaster(BaseTest):
         clean_work_dir,
         config_json,
         setup_hp_finished,
-        work_dir,
-        database_remove
+        work_dir
     ):
-        database_remove()
         options = {
             'config': self.config_json,
             'resume': None,
             'clean': False,
-            'fs': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
             'process_name': 'master'
         }
         master = AbstractMaster(options)
-        master.storage.alive.init_alive()
         setup_hp_finished(10)
         assert master.pre_process() is None
-        master.worker_o.kill()
-        master.worker_s.kill()
+        alive_files = get_dict_files(work_dir.joinpath('alive'), '*.yml')
+
+        for f in alive_files:
+            os.remove(f)
+
+        if master.scheduler_proc is not None:
+            master.scheduler_proc.wait()
+
+        if master.optimizer_proc is not None:
+            master.optimizer_proc.wait()
 
     def test_post_process(
         self,
         cd_work,
         clean_work_dir,
         setup_hp_finished,
-        work_dir,
-        database_remove
+        work_dir
     ):
-        database_remove()
         options = {
             'config': self.config_json,
             'resume': None,
             'clean': False,
-            'fs': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
             'process_name': 'master'
         }
         master = AbstractMaster(options)
-        master.storage.alive.init_alive()
-        
-        for i in range(10):
-            master.storage.trial.set_any_trial_state(trial_id=i, state='finished')
-            master.storage.result.set_any_trial_objective(trial_id=i, objective=(i * 10.0))
-            for j in range(2):
-                master.storage.hp.set_any_trial_param(
-                    trial_id=i,
-                    param_name=f"x{j}",
-                    param_value=0.0,
-                    param_type='flaot'
-                )
+        setup_hp_finished(10)
         assert master.post_process() is None
 
+        # with open(self.config_json, 'r') as f:
+        #     json_obj = json.load(f)
+        # json_obj['hyperparameter']['goal'] = aiaccel.goal_maximize
+        # config = ConfileWrapper(json_obj, 'json_object')
+        # master.config = config
+        # コンフィグファイルの読取り形式変更改修に伴いテストコードも変更(荒本)
         master.config = Config(self.config_json)
         master.config.goal.set(aiaccel.goal_maximize)
         assert master.post_process() is None
 
+        # json_obj['hyperparameter']['goal'] = 'invalid_goal'
+        # config = ConfileWrapper(json_obj, 'json_object')
+        # master.config = config
+        # コンフィグファイルの読取り形式変更改修に伴いテストコードも変更(荒本)
         master.config = Config(self.config_json)
+        # master.config.goal.set('invalid_goal')
         master.goal = 'invalid_goal'
 
-        for i in range(10):
-            master.storage.trial.set_any_trial_state(trial_id=i, state='finished')
-            
         try:
             master.post_process()
             assert False
@@ -203,20 +226,16 @@ class TestAbstractMaster(BaseTest):
         cd_work,
         clean_work_dir,
         config_json,
-        setup_hp_finished,
-        database_remove
+        setup_hp_finished
     ):
-        database_remove()
         commandline_args = [
             "start.py",
             "--config",
             format(config_json)
         ]
         with patch.object(sys, 'argv', commandline_args):
-            # from aiaccel import start
-            # master = start.Master()
-            options = Arguments()
-            master = AbstractMaster(options)
+            from aiaccel import start
+            master = start.Master()
 
         # master = AbstractMaster(config_json)
         assert master.print_dict_state() is None
@@ -225,7 +244,7 @@ class TestAbstractMaster(BaseTest):
         assert master.print_dict_state() is None
 
         setup_hp_finished(1)
-        master.get_each_state_count()
+        master.get_dict_state()
         assert master.print_dict_state() is None
 
     def test_start_optimizer(
@@ -233,40 +252,45 @@ class TestAbstractMaster(BaseTest):
         cd_work,
         clean_work_dir,
         config_json,
-        fake_process,
-        database_remove
+        fake_process
     ):
-        database_remove()
         commandline_args = [
             "start.py",
             "--config",
             format(config_json)
         ]
         with patch.object(sys, 'argv', commandline_args):
-            options = Arguments()
-            master = AbstractMaster(options)
-
+            from aiaccel import start
+            master = start.Master()
         assert master.start_optimizer() is None
         master.worker_o.kill()
+
+        # master = AbstractMaster(config_json)
+        # opt_cmd = master.config.optimizer_command.get().split(" ")
+        # opt_cmd.append('--config')
+        # opt_cmd.append(str(config_json))
+
+        # fake_process.register_subprocess(
+        #     master.start_optimizer(), callback=callback_return
+        # )
+        # assert master.start_optimizer() is None
+        # master.th_optimizer.abort()
 
     def test_start_scheduler(
         self,
         cd_work,
         clean_work_dir,
         config_json,
-        fake_process,
-        database_remove
+        fake_process
     ):
-        database_remove()
         commandline_args = [
             "start.py",
             "--config",
             format(config_json)
         ]
         with patch.object(sys, 'argv', commandline_args):
-            options = Arguments()
-            master = AbstractMaster(options)
-
+            from aiaccel import start
+            master = start.Master()
         assert master.start_scheduler() is None
         master.worker_s.kill()
 
@@ -287,175 +311,125 @@ class TestAbstractMaster(BaseTest):
         # assert master.start_scheduler() is None
         # master.th_scheduler.abort()
 
-    def test_loop_pre_process(
-        self,
-        cd_work,
-        clean_work_dir,
-        config_json,
-        database_remove
-    ):
-        database_remove()
-
-        commandline_args = [
-            "start.py",
-            "--config",
-            format(config_json)
-        ]
+    def test_loop_pre_process(self, cd_work, clean_work_dir, config_json):
         options = {
             'config': config_json,
             'resume': None,
             'clean': False,
-            'fs': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
             'process_name': 'master'
         }
-        with patch.object(sys, 'argv', commandline_args):
-            master = AbstractMaster(options)
+        master = AbstractMaster(options)
         assert master.loop_pre_process() is None
 
-    def test_loop_post_process(
-        self,
-        cd_work,
-        clean_work_dir,
-        config_json,
-        database_remove
-    ):
-        database_remove()
-        commandline_args = [
-            "start.py",
-            "--config",
-            format(config_json)
-        ]
+    def test_loop_post_process(self, cd_work, clean_work_dir, config_json):
         options = {
             'config': config_json,
             'resume': None,
             'clean': False,
-            'fs': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
             'process_name': 'master'
         }
-        with patch.object(sys, 'argv', commandline_args):
-            master = AbstractMaster(options)
+        master = AbstractMaster(options)
         p = subprocess.Popen(['ls'])
-        assert master.loop_post_process() is None
+        with patch.object(master, 'optimizer_proc', return_value=p):
+            with patch.object(master, 'scheduler_proc', return_value=p):
+                assert master.loop_post_process() is None
 
     def test_inner_loop_pre_process(
         self,
         cd_work,
         clean_work_dir,
-        config_json,
-        database_remove
+        config_json
     ):
-        database_remove()
-
         options = {
             'config': config_json,
             'resume': None,
             'clean': False,
-            'fs': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
             'process_name': 'master'
         }
-        commandline_args = [
-            "start.py",
-            "--config",
-            format(config_json)
-        ]
-        with patch.object(sys, 'argv', commandline_args):
-            master = AbstractMaster(options)
-        master.storage.alive.init_alive()
-        # with patch.object(master, 'ws', return_value='/'):
-        #     with patch('aiaccel.dict_alive', return_value=''):
-        #         with patch('aiaccel.alive_master', return_value='tmp'):
-        #             with patch.object(master, 'get_each_state_count', return_value=None):
-        #                 master.pre_process()
-        #                 assert master.inner_loop_pre_process()
-        with patch.object(master, 'ws', return_value='/tmp'):
-            with patch.object(master, 'get_each_state_count', return_value=None):
-                master.storage.alive.init_alive()
-                master.pre_process()
-                assert master.inner_loop_pre_process()
-
-        master.worker_o.kill()
-        master.worker_s.kill()
-        master.storage.alive.init_alive()
+        master = AbstractMaster(options)
+        with patch.object(master, 'ws', return_value='/'):
+            with patch('aiaccel.dict_alive', return_value=''):
+                with patch('aiaccel.alive_master', return_value='tmp'):
+                    with patch.object(
+                        master, 'get_dict_state', return_value=None
+                    ):
+                        master.pre_process()
+                        assert master.inner_loop_pre_process()
 
     def test_inner_loop_main_process(
         self,
         cd_work,
         clean_work_dir,
         config_json,
-        setup_hp_finished,
-        database_remove
+        setup_hp_finished
     ):
-        database_remove()
-        # options = {
-        #     'config': config_json,
-        #     'resume': None,
-        #     'clean': False,
-        #     'fs': False,
-        #     'process_name': 'master'
-        # }
-        commandline_args = [
-            "start.py",
-            "--config",
-            format(config_json)
-        ]
         options = {
             'config': config_json,
             'resume': None,
             'clean': False,
-            'fs': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
             'process_name': 'master'
         }
-        with patch.object(sys, 'argv', commandline_args):
-            options = Arguments()
-            master = AbstractMaster(options)
-        
-        master.storage.alive.init_alive()
-        master.pre_process()
-        master.inner_loop_pre_process()
+        master = AbstractMaster(options)
         assert master.inner_loop_main_process()
 
-        master.trial_number = 10
-        for i in range(10):
-            master.storage.trial.set_any_trial_state(trial_id=i, state='finished')
-        # setup_hp_finished(10)
-        master.get_each_state_count()
+        setup_hp_finished(10)
+        master.get_dict_state()
         assert not master.inner_loop_main_process()
-
-        master.worker_o.kill()
-        master.worker_s.kill()
-        master.storage.alive.init_alive()
 
     def test_inner_loop_post_process(
         self,
         cd_work,
         clean_work_dir,
-        config_json,
-        database_remove
+        config_json
     ):
-        database_remove()
-
-        commandline_args = [
-            "start.py",
-            "--config",
-            format(config_json)
-        ]
         options = {
             'config': config_json,
             'resume': None,
             'clean': False,
-            'fs': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
             'process_name': 'master'
         }
-        with patch.object(sys, 'argv', commandline_args):
-            master = AbstractMaster(options)
         master = AbstractMaster(options)
-        master.storage.alive.init_alive()
-
-        master.pre_process()
-        master.inner_loop_pre_process()
-        master.inner_loop_main_process()
         assert master.inner_loop_post_process()
 
-        master.worker_o.kill()
-        master.worker_s.kill()
-        master.storage.alive.init_alive()
+    def test_serialize(self, cd_work, clean_work_dir, config_json):
+        options = {
+            'config': config_json,
+            'resume': 0,
+            'clean': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
+            'process_name': 'master'
+        }
+        master = AbstractMaster(options)
+        serialized_dict = master._serialize()
+        assert 'start_time' in serialized_dict
+        assert 'loop_start_time' in serialized_dict
+
+    def test_deserialize(self, cd_work, clean_work_dir, config_json):
+        options = {
+            'config': config_json,
+            'resume': 0,
+            'clean': False,
+            'nosave': False,
+            'dbg': False,
+            'graph': False,
+            'process_name': 'master'
+        }
+        master = AbstractMaster(options)
+        assert master._deserialize({}) is None

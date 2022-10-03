@@ -8,7 +8,7 @@
     "randseed": 1,
     "silent_mode": false,
     "workspace": "/tmp/work",
-    "job_command": "python original_main.py"
+    "job_command": "python wrapper.py"
   },
   "resource": {
     "type": "local",
@@ -23,7 +23,7 @@
     "group": "gaa"
   },
   "optimize": {
-    "search_algorithm": "aiaccel.optimizer.NelderMeadOptimizer",
+    "search_algorithm": "nelder-mead",
     "goal": "minimize",
     "trial_number": 10,
     "parameters": [

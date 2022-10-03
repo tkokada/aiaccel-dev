@@ -1,9 +1,13 @@
-from aiaccel.optimizer.abstract import AbstractOptimizer
+from aiaccel.optimizer.abstract_optimizer import AbstractOptimizer
+from aiaccel.util.filesystem import get_file_hp_finished,\
+    interprocess_lock_file
 from sobol_seq import i4_sobol
 from typing import Optional
+import aiaccel
+import fasteners
 
 
-class SobolOptimizer(AbstractOptimizer):
+class SobolSearchOptimizer(AbstractOptimizer):
     """An optimizer class with sobol algorithm.
 
     Attributes:
@@ -14,7 +18,7 @@ class SobolOptimizer(AbstractOptimizer):
     """
 
     def __init__(self, options: dict) -> None:
-        """Initial method of SobolOptimizer.
+        """Initial method of SobolSearchOptimizer.
 
         Args:
             config (str): A file name of a configuration.
@@ -29,8 +33,10 @@ class SobolOptimizer(AbstractOptimizer):
             None
         """
         super().pre_process()
-        finished = self.storage.trial.get_finished()
-        self.generate_index = len(finished)
+        with fasteners.InterProcessLock(interprocess_lock_file((self.ws / aiaccel.dict_hp), self.dict_lock)):
+            files = get_file_hp_finished(self.ws)
+
+        self.generate_index = len(files)
 
     def generate_parameter(self, number: Optional[int] = 1) -> None:
         """Generate parameters.
@@ -41,16 +47,16 @@ class SobolOptimizer(AbstractOptimizer):
         Returns:
             None
         """
+        returned_params = []
         l_params = self.params.get_parameter_list()
         n_params = len(l_params)
         initial_parameter = self.generate_initial_parameter()
 
         if initial_parameter is not None:
-            self.register_ready(initial_parameter)
-            self._serialize()
+            returned_params.append(initial_parameter)
             number -= 1
 
-        for _ in range(number):
+        for n in range(number):
             new_params = []
             vec, seed = i4_sobol(n_params, self.generate_index)
             self.generate_index = seed
@@ -66,9 +72,10 @@ class SobolOptimizer(AbstractOptimizer):
                 }
                 new_params.append(new_param)
 
-            self.num_of_generated_parameter += 1
-            self.register_ready({'parameters': new_params})
-            self._serialize()
+            returned_params.append({'parameters': new_params})
+            self.generated_parameter += 1
+
+        self.create_parameter_files(returned_params)
 
     def _serialize(self) -> dict:
         """Serialize this module.
@@ -77,18 +84,13 @@ class SobolOptimizer(AbstractOptimizer):
             dict: The serialized objects.
         """
         self.serialize_datas = {
-            'num_of_generated_parameter': self.num_of_generated_parameter,
+            'generated_parameter': self.generated_parameter,
             'loop_count': self.loop_count,
             'generate_index': self.generate_index
         }
-        self.serialize.serialize(
-            trial_id=self.trial_id.integer,
-            optimization_variables=self.serialize_datas,
-            native_random_state=self.get_native_random_state(),
-            numpy_random_state=self.get_numpy_random_state()
-        )
+        return super()._serialize()
 
-    def _deserialize(self, trial_id: int) -> None:
+    def _deserialize(self, dict_objects: dict) -> None:
         """Deserialize this module.
 
         Args:
@@ -97,11 +99,5 @@ class SobolOptimizer(AbstractOptimizer):
         Returns:
             None
         """
-        d = self.serialize.deserialize(trial_id)
-        self.deserialize_datas = d['optimization_variables']
-        self.set_native_random_state(d['native_random_state'])
-        self.set_numpy_random_state(d['numpy_random_state'])
-
-        self.generate_index = self.deserialize_datas['generate_index']
-        self.loop_count = self.deserialize_datas['loop_count']
-        self.num_of_generated_parameter = self.deserialize_datas['num_of_generated_parameter']
+        super()._deserialize(dict_objects)
+        self.generate_index = dict_objects['generate_index']

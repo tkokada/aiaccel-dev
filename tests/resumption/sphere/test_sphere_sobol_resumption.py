@@ -2,8 +2,8 @@ from tests.resumption.resumption_test import ResumptionTest
 import aiaccel
 
 
-class TestSphereSobolResumption(ResumptionTest):
+class TestSphereRandomResumption(ResumptionTest):
 
     @classmethod
     def setup_class(cls):
-        cls.search_algorithm = "sobol"
+        cls.search_algorithm = aiaccel.search_algorithm_random

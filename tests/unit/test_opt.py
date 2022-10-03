@@ -12,8 +12,6 @@ from aiaccel.util.aiaccel import Messages
 from tests.base_test import BaseTest
 from subprocess import CompletedProcess
 import numpy as np
-from aiaccel.storage.storage import Storage
-
 
 def test_create_message():
     msg = Messages("test")
@@ -57,8 +55,8 @@ class TestRun(BaseTest):
     def get_test_args(self):
         return [
             "wapper.py",
-            f"--config={self.config_json}",
-            "--trial_id=0001",
+            "--config={}".format(self.config_json),
+            "--index=0001",
             "--x1=0.1",
             "--x2=0.2",
             "--x3=0.3",
@@ -95,11 +93,11 @@ class TestRun(BaseTest):
             }
         ]
 
-    # test module: trial_id
-    def test_trial_id(self):
+    # test module: hashname
+    def test_hashname(self):
         with patch.object(sys, 'argv', self.get_test_args()):
             run = Run()
-            assert run.trial_id == "0001"
+            assert run.hashname == "0001"
 
     # test module parameters
     def test_parameters(self):
@@ -146,17 +144,8 @@ class TestRun(BaseTest):
 
     # test module: set_error
     def test_set_error(self):
-        # for i in range(10):
-        #     self.storage.result.set_any_trial_objective(
-        #         trial_id=i,
-        #         objective=0.0
-        #     )
-        # self.storage.result.all_delete()
-        # self.storage.timestamp.all_delete()
-        # self.storage.errors.all_delete()
         with patch.object(sys, 'argv', self.get_test_args()):
             run = Run()
-            run.index = '0001'
             run.set_error("test error")
             assert run.err == "test error"
 

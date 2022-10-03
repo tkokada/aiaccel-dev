@@ -15,7 +15,6 @@ def test_subprocess_ps():
     assert type(ret) is list
 
 
-'''
 def test_ps2joblist(fake_process):
     """
     ToDo: missing test some branches.
@@ -79,12 +78,6 @@ def test_ps2joblist(fake_process):
         assert False
     except KeyError:
         assert True
-'''
-
-
-def test_ps2joblist():
-    ret = ps2joblist()
-    assert type(ret) is list
 
 
 def test_kill_process():

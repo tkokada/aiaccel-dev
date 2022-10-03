@@ -1,19 +1,19 @@
 {
   "generic": {
     "workspace": "/tmp/work",
-    "job_command": "python /tmp/work/original_main.py"
+    "job_command": "python wrapper.py"
   },
   "resource": {
     "type": "local",
     "num_node": 4
   },
   "ABCI": {
-    "group": "[group]",
+    "group": "gaa",
     "job_script_preamble": "./job_script_preamble.sh",
     "job_execution_options": ""
   },
   "optimize": {
-    "search_algorithm": "aiaccel.optimizer.TpeOptimizer",
+    "search_algorithm": "tpe",
     "goal": "minimize",
     "trial_number": 10,
     "rand_seed": 42,

@@ -1,7 +1,7 @@
 {
   "generic": {
     "workspace": "/tmp/work",
-    "job_command": "python /tmp/work/original_main.py",
+    "job_command": "python wrapper.py",
     "batch_job_timeout": 600
   },
   "resource": {
@@ -9,12 +9,12 @@
     "num_node": 4
   },
   "ABCI": {
-    "group": "[group]",
+    "group": "gaa50073",
     "job_script_preamble": "./job_script_preamble.sh",
     "job_execution_options": ""
   },
   "optimize": {
-    "search_algorithm": "aiaccel.optimizer.GridOptimizer",
+    "search_algorithm": "grid",
     "goal": "minimize",
     "trial_number": 5,
     "rand_seed": 42,
