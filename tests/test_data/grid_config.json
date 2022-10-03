@@ -1,7 +1,7 @@
 {
   "generic": {
     "workspace": "/tmp/work",
-    "job_command": "python wrapper.py",
+    "job_command": "python /tmp/work/original_main.py",
     "batch_job_timeout": 600
   },
   "resource": {
@@ -13,7 +13,7 @@
     "group": "gaa"
   },
   "optimize": {
-    "search_algorithm": "grid",
+    "search_algorithm": "aiaccel.optimizer.GridOptimizer",
     "goal": "minimize",
     "trial_number": 10,
     "rand_seed": 42,

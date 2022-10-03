@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Tuple, Union
 import aiaccel
 import logging
-import random
+import numpy as np
 
 
 def get_best_parameter(files: List[Path], goal: str, dict_lock: Path) ->\
@@ -43,8 +43,8 @@ def get_best_parameter(files: List[Path], goal: str, dict_lock: Path) ->\
                 best, best_file = result, f
         else:
             logger = logging.getLogger('root.master.parameter')
-            logger.error('Invalid goal: {}.'.format(goal))
-            raise ValueError('Invalid goal: {}.'.format(goal))
+            logger.error(f'Invalid goal: {goal}.')
+            raise ValueError(f'Invalid goal: {goal}.')
 
     return best, best_file
 
@@ -86,10 +86,7 @@ def get_grid_options(
             break
 
     if step is None:
-        raise KeyError(
-            'No grid option for parameter: {}'
-            .format(parameter_name)
-        )
+        raise KeyError(f'No grid option for parameter: {parameter_name}')
     else:
         return base, log, step
 
@@ -196,16 +193,16 @@ class HyperParameter(object):
         if initial and self.initial is not None:
             value = self.initial
         elif self.type == 'INT':
-            value = random.randrange(self.lower, self.upper)
+            value = np.random.randint(self.lower, self.upper)
         elif self.type == 'FLOAT':
-            value = random.uniform(self.lower, self.upper)
+            value = np.random.uniform(self.lower, self.upper)
         elif self.type == 'CATEGORICAL':
-            value = random.choice(self.choices)
+            value = np.random.choice(self.choices)
         elif self.type == 'ORDINAL':
-            value = random.choice(self.sequence)
+            value = np.random.choice(self.sequence)
         else:
             raise TypeError(
-                'Invalid hyper parameter type: {}'.format(self.type))
+                f'Invalid hyper parameter type: {self.type}')
 
         return {'name': self.name, 'type': self.type, 'value': value}
 
@@ -245,10 +242,7 @@ class HyperParameterConfiguration(object):
         if name in self.hps:
             return self.hps[name]
         else:
-            raise KeyError(
-                'The parameter name {} does not exist.'
-                .format(name)
-            )
+            raise KeyError(f'The parameter name {name} does not exist.')
 
     def get_parameter_list(self) -> List[HyperParameter]:
         """Get a list of hyper parameter objects.

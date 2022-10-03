@@ -4,7 +4,6 @@ from typing import Dict, List, Optional, Union
 import copy
 import logging
 import numpy as np
-import random
 
 STATES = [
     'WaitInitialize',
@@ -86,59 +85,23 @@ class NelderMead(object):
         self.params = params
         self.bdrys = np.array([[p.lower, p.upper] for p in self.params])
         self.coef = coef
-        n_dim = len(self.bdrys)
+        self.n_dim = len(self.bdrys)
 
-        if initial_parameters is not None:
-            self.y = np.array(
-                [
-                    [
-                        random.random() * (b[1] - b[0]) + b[0]
-                        for b in self.bdrys
-                    ]
-                    for _ in range(n_dim + 1)
-                ]
-            )
-            for dp in initial_parameters:
-                if (
-                    type(dp['value']) is int or
-                    type(dp['value']) is float
-                ):
-                    dp['value'] = [dp['value']]
-
-                if type(dp['value']) is not list:
-                    raise TypeError('Default parameter should be set as list.')
-
-                ind = [p.name for p in self.params].index(dp['parameter_name'])
-
-                for i in range(len(dp['value'])):
-                    self.y[i][ind] = dp['value'][i]
-        else:
-            self.y = np.array(
-                [
-                    [
-                        random.random() * (b[1] - b[0]) + b[0]
-                        for b in self.bdrys
-                    ]
-                    for _ in range(n_dim + 1)
-                ]
-            )
+        self.y = self._create_initial_values(initial_parameters)
 
         self.f = []
         self.yc = None
-        self.storage = {
+        self._storage = {
             "r": None, "ic": None, "oc": None, "e": None, "s": None}
         self._max_itr = iteration
         self._total_itr = 0         # included out of boundary
         self._evaluated_itr = 0     # not included out of boundary
         self._history = {
             'total_y': [],              # y each loop
-            'evaluated_y': [],          # y each loop not included out of
-                                        # boundary
-            'op': [],                   # operations such as 'reflect'
-                                        # and so on.
+            'evaluated_y': [],          # y each loop not included out of boundary
+            'op': [],                   # operations such as 'reflect' and so on.
             'total_sample': [],         # sampled point each loop
-            'evaluated_sample': [],     # sampled point each loop not included
-                                        # out of boundary
+            'evaluated_sample': [],     # sampled point each loop not included out of boundary
             'fyr_order': []             # order of f(yr) in self.f
         }
         self._executing_index = 0
@@ -154,6 +117,33 @@ class NelderMead(object):
         self._result = []
         for y in self.y:
             self._add_executing(y)
+
+    def _create_initial_values(self, initial_parameters) -> list:
+        initial_values = [
+            [self._create_initial_value(initial_parameters, dim, num_of_initials) for dim in range(len(self.params))]
+            for num_of_initials in range(self.n_dim + 1)
+        ]
+
+        return np.array(initial_values)
+
+    def _create_initial_value(self, initial_parameters, dim, num_of_initials):
+        if initial_parameters is not None:
+            if (
+                type(initial_parameters[dim]['value']) is int or
+                type(initial_parameters[dim]['value']) is float
+            ):
+                initial_parameters[dim]['value'] = [initial_parameters[dim]['value']]
+
+            if type(initial_parameters[dim]['value']) is not list:
+                raise TypeError('Default parameter should be set as list.')
+
+            if num_of_initials < len(initial_parameters[dim]['value']):
+                return initial_parameters[dim]['value'][num_of_initials]
+            else:
+                return self.params[dim].sample()['value']
+
+        else:
+            return self.params[dim].sample()['value']
 
     def _add_executing(
         self, y: np.ndarray,
@@ -172,9 +162,9 @@ class NelderMead(object):
 
         if self._is_out_of_boundary(y):
             out_of_boundary = True
-            self.logger.debug('_add_executing out of boundary y: {}'.format(y))
+            self.logger.debug(f'_add_executing out of boundary y: {y}')
 
-        name = generate_random_name()
+        vertex_id = generate_random_name()
         params = []
 
         for yi, p in zip(y, self.params):
@@ -182,7 +172,7 @@ class NelderMead(object):
 
         self._executing.append(
             {
-                'name': name,
+                'vertex_id': vertex_id,
                 'parameters': params,
                 'state': self._state,
                 'itr': self._evaluated_itr,
@@ -197,7 +187,7 @@ class NelderMead(object):
                 result = float('inf') * -1
             self.add_result_parameters(
                 {
-                    'name': name,
+                    'vertex_id': vertex_id,
                     'parameters': params,
                     'state': self._state,
                     'itr': self._evaluated_itr,
@@ -240,19 +230,15 @@ class NelderMead(object):
             return None
 
         try:
-            i = [e['name'] for e in self._executing].index(r['name'])
+            i = [e['vertex_id'] for e in self._executing].index(r['vertex_id'])
         except ValueError:
-            self.logger.error('Could not find match for r: {}'.format(r))
-            raise ValueError('Could not find match for r: {}'.format(r))
+            self.logger.error(f'Could not find match for r: {r}')
+            raise ValueError(f'Could not find match for r: {r}')
 
         if r['out_of_boundary']:
             if self._state == 'WaitShrink':
-                self.logger.error(
-                    'out of boundary in WaitShrink. r: {}'.format(r)
-                )
-                raise ValueError(
-                    'out of boundary in WaitShrink. r: {}'.format(r)
-                )
+                self.logger.error(f'out of boundary in WaitShrink. r: {r}')
+                raise ValueError(f'out of boundary in WaitShrink. r: {r}')
             r['result'] = float('inf')
             self._out_of_boundary = True
 
@@ -275,8 +261,8 @@ class NelderMead(object):
             ValueError: Causes when unsupported state is given.
         """
         if state not in STATES:
-            self.logger.error('Unsupported state: {}'.format(state))
-            raise ValueError('Unsupported state: {}'.format(state))
+            self.logger.error(f'Unsupported state: {state}')
+            raise ValueError(f'Unsupported state: {state}')
 
         self._state = state
 
@@ -327,7 +313,7 @@ class NelderMead(object):
             None
         """
         if self.f[0] <= self._fr < self.f[-2]:
-            self.y[-1] = self.storage["r"]
+            self.y[-1] = self._storage["r"]
             self.f[-1] = self._fr
             self._finalize()
         elif self._fr < self.f[0]:
@@ -358,10 +344,10 @@ class NelderMead(object):
             None
         """
         if self._fe < self._fr:
-            self.y[-1] = self.storage["e"]
+            self.y[-1] = self._storage["e"]
             self.f[-1] = self._fe
         else:
-            self.y[-1] = self.storage["r"]
+            self.y[-1] = self._storage["r"]
             self.f[-1] = self._fr
         self._finalize()
 
@@ -386,7 +372,7 @@ class NelderMead(object):
             None
         """
         if self._foc <= self._fr:
-            self.y[-1] = self.storage["oc"]
+            self.y[-1] = self._storage["oc"]
             self.f[-1] = self._foc
             self._finalize()
         else:
@@ -414,7 +400,7 @@ class NelderMead(object):
         """
 
         if self._fic < self.f[-1]:
-            self.y[-1] = self.storage["ic"]
+            self.y[-1] = self._storage["ic"]
             self.f[-1] = self._fic
             self._finalize()
         else:
@@ -448,9 +434,9 @@ class NelderMead(object):
             self._evaluated_itr += 1
             self._history['evaluated_sample'].append(self.y[-1])
         else:
-            self.logger.debug('history: {}'.format(self._history['op']))
-            self.logger.debug('y: {}'.format(self.y))
-            self.logger.debug('f: {}'.format(self.f))
+            self.logger.debug(f'history: {self._history["op"]}')
+            self.logger.debug(f'y: {self.y}')
+            self.logger.debug(f'f: {self.f}')
 
         self._total_itr += 1
         self._add_y_history()
@@ -484,8 +470,13 @@ class NelderMead(object):
         Returns:
             None
         """
-        self.storage = {"r": None, "ic": None, "oc": None, "e": None,
-                        "s": None}
+        self._storage = {
+            "r": None,
+            "ic": None,
+            "oc": None,
+            "e": None,
+            "s": None
+        }
         self._order_by()
         self.yc = self.y[:-1].mean(axis=0)
         self._history['op'].append('i')
@@ -497,7 +488,7 @@ class NelderMead(object):
             None
         """
         yr = self.yc + self.coef["r"] * (self.yc - self.y[-1])
-        self.storage["r"] = yr
+        self._storage["r"] = yr
         self._history['op'].append('r')
         self._change_state('WaitReflect')
         self._add_executing(yr)
@@ -509,7 +500,7 @@ class NelderMead(object):
             None
         """
         ye = self.yc + self.coef["e"] * (self.yc - self.y[-1])
-        self.storage["e"] = ye
+        self._storage["e"] = ye
         self._history['op'].append('e')
         self._change_state('WaitExpand')
         self._add_executing(ye)
@@ -522,7 +513,7 @@ class NelderMead(object):
             None
         """
         yic = self.yc + self.coef["ic"] * (self.yc - self.y[-1])
-        self.storage["ic"] = yic
+        self._storage["ic"] = yic
         self._history['op'].append('ic')
         self._change_state('WaitInsideContract')
         self._add_executing(yic)
@@ -535,7 +526,7 @@ class NelderMead(object):
             None
         """
         yoc = self.yc + self.coef["oc"] * (self.yc - self.y[-1])
-        self.storage["oc"] = yoc
+        self._storage["oc"] = yoc
         self._history['op'].append('io')
         self._change_state('WaitOutsideContract')
         self._add_executing(yoc)
@@ -644,8 +635,8 @@ class NelderMead(object):
         elif self._state == 'WaitShrink':
             self._wait_shrink(results)
         else:
-            self.logger.error('Invalid state: {}'.format(self._state))
-            raise ValueError('Invalid state: {}'.format(self._state))
+            self.logger.error(f'Invalid state: {self._state}')
+            raise ValueError(f'Invalid state: {self._state}')
 
         return self._executing
 
@@ -657,12 +648,12 @@ class NelderMead(object):
         """
         storage = {}
         for key in ['e', 'ic', 'oc', 'r', 's']:
-            if type(self.storage[key]) is np.ndarray:
-                storage[key] = self.storage[key].tolist()
-            elif type(self.storage[key]) is np.float64:
-                storage[key] = float(self.storage[key])
+            if type(self._storage[key]) is np.ndarray:
+                storage[key] = self._storage[key].tolist()
+            elif type(self._storage[key]) is np.float64:
+                storage[key] = float(self._storage[key])
             else:
-                storage[key] = self.storage[key]
+                storage[key] = self._storage[key]
 
         y = self.y
         f = self.f
@@ -695,9 +686,7 @@ class NelderMead(object):
                 elif type(v) is np.int64:
                     value.append(int(v))
                 else:
-                    print(
-                        'nm serialize history key: ', key, ', type: ', type(v)
-                    )
+                    print('nm serialize history key: ', key, ', type: ', type(v))
                     value.append(v)
             history[key] = value
 
@@ -776,18 +765,18 @@ class NelderMead(object):
             for v in dict_objects['_history'][key]:
                 if type(v) is list:
                     history[key].append(
-                        np.array(dict_objects['_history'][key])
+                        np.array(v)
                     )
                 elif type(v) is float:
                     history[key].append(
-                        np.float64(dict_objects['_history'][key])
+                        np.float64(v)
                     )
                 elif type(v) is int:
                     history[key].append(
-                        np.int64(dict_objects['_history'][key])
+                        np.int64(v)
                     )
                 else:
-                    history[key].append(dict_objects['_history'][key])
+                    history[key].append(v)
 
         executing = copy.deepcopy(dict_objects['_executing'])
         for e in executing:
@@ -798,7 +787,7 @@ class NelderMead(object):
         self.y = y
         self.f = f
         self.yc = yc
-        self.storage = storage
+        self._storage = storage
         self._executing = executing
         self._history = history
         self.coef = dict_objects['coef']

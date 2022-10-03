@@ -1,4 +1,4 @@
-from aiaccel.optimizer.grid.search import GridSearchOptimizer, generate_grid_points
+from aiaccel.optimizer.grid.search import GridOptimizer, generate_grid_points
 from aiaccel.parameter import HyperParameter, load_parameter
 from tests.base_test import BaseTest
 import functools
@@ -66,32 +66,36 @@ def test_generate_grid_points(grid_load_test_config):
         assert True
 
 
-class TestGridSearchOptimizer(BaseTest):
+class TestGridOptimizer(BaseTest):
 
     def test_pre_process(self, clean_work_dir):
+        self.workspace.clean()
+        self.workspace.create()
+
         options = {
             'config': self.grid_config_json,
             'resume': None,
             'clean': False,
-            'nosave': False,
-            'dbg': False,
-            'graph': False,
+            'fs': False,
             'process_name': 'optimizer'
         }
-        optimizer = GridSearchOptimizer(options)
+        optimizer = GridOptimizer(options)
+        optimizer.storage.alive.init_alive()
         optimizer.pre_process()
 
     def test_get_parameter_index(self, clean_work_dir):
+        self.workspace.clean()
+        self.workspace.create()
+
         options = {
             'config': self.grid_config_json,
             'resume': None,
             'clean': False,
-            'nosave': False,
-            'dbg': False,
-            'graph': False,
+            'fs': False,
             'process_name': 'optimizer'
         }
-        optimizer = GridSearchOptimizer(options)
+        optimizer = GridOptimizer(options)
+        optimizer.storage.alive.init_alive()
         optimizer.pre_process()
         assert optimizer.get_parameter_index() == [0 for _ in range(0, 10)]
 
@@ -103,16 +107,18 @@ class TestGridSearchOptimizer(BaseTest):
         assert optimizer.get_parameter_index() is None
 
     def test_generate_parameter(self, clean_work_dir):
+        self.workspace.clean()
+        self.workspace.create()
+
         options = {
             'config': self.grid_config_json,
             'resume': None,
             'clean': False,
-            'nosave': False,
-            'dbg': False,
-            'graph': False,
+            'fs': False,
             'process_name': 'optimizer'
         }
-        optimizer = GridSearchOptimizer(options)
+        optimizer = GridOptimizer(options)
+        optimizer.storage.alive.init_alive()
         optimizer.pre_process()
         max_index = functools.reduce(
             lambda x, y: x*y,

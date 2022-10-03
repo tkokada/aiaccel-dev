@@ -185,7 +185,7 @@ ABCI:
 **サンプル**
 ```yaml
 optimize:
-  search_algorithm: "nelder-mead"
+  search_algorithm: "aiaccel.optimizer.NelderMeadOptimizer"
   goal: "minimize"
   trial_number: 30
   rand_seed: 42
@@ -221,8 +221,8 @@ optimize:
   - **upper** - ハイパーパラメータ最大値を設定します。
   - **initial** - ハイパーパラメータの初期値を設定します。
   - **step**  - ハイパーパラメータの分解能を設定します(最適化アルゴリズムがgridの場合は必ず指定してください。)。
-  - **log** - 対数設定用の項目です(最適化アルゴリズムがgridの場合は必ず指定してください。)。
-  - **base** - 対数設定用の項目です(最適化アルゴリズムがgridの場合は必ず指定してください。)。
+  - **log** - 対数スケールで探索します。値はtrue/falseで指定して下さい。最適化アルゴリズムがgridの場合は必ず指定してください。
+  - **base** - 底数を指定します。最適化アルゴリズムがgridの場合は必ず指定してください。
   - **comment** - 自由記述欄。
 
 
@@ -322,6 +322,7 @@ parameters:
 
 ##### grid使用時の注意事項
 最適化アルゴリズムで`grid`を使用する場合、`parameters`の設定に`log`、`step`、`base`を指定してください。
+また、`grid`では`initial`の項目は使用できません。初期値は`lower`に設定してください。
 
 ```yaml
 parameters:
@@ -333,7 +334,6 @@ parameters:
   step: 1
   log: false
   base: 10
-  initial: 0.0
 -
   name: "x2"
   type: "uniform_int"
@@ -342,7 +342,6 @@ parameters:
   step: 1
   log: false
   base: 10
-  initial: 0.0
 ```
 
 
@@ -418,7 +417,7 @@ ABCI:
   job_execution_options: ""
 
 optimize:
-  search_algorithm: "nelder-mead"
+  search_algorithm: "aiaccel.optimizer.NelderMeadOptimizer"
   goal: "minimize"
   trial_number: 30
   rand_seed: 42
@@ -452,7 +451,7 @@ def func(x1, x2):
 
 これを、aiaccelで最適化させるには次のように変更します。
 ```python
-from aiaccel.util import opt
+from aiaccel.util import aiaccel
 
 def func(p):
     x1 = p["x1"]
@@ -462,7 +461,7 @@ def func(p):
 
 if __name__ == "__main__":
     
-    run = opt.Run()
+    run = aiaccel.Run()
     run.execute_and_report(func)
 ```
 
@@ -530,7 +529,7 @@ export PYTHONPATH=$AIACCELPATH:$AIACCELPATH/lib
 ## 6 最適化実行
 プロジェクトフォルダに移動し、次のコマンドを実行します。
 ```bash
-> python -m aiaccel.start --config config.yaml
+> aiaccel-start --config config.yaml
 ```
 
 - ご注意
@@ -547,18 +546,18 @@ export PYTHONPATH=$AIACCELPATH:$AIACCELPATH/lib
 
 `start`コマンドの後に、追加オプションを指定できます。
 ```bash
-> python -m aiaccel.start
+> aiaccel-start
 ```
 - --clean : workspaceが既に存在する場合、最適化実行前にworkspaceを削除します。
 - --resume : workspaceが既に存在する場合、保存データが存在するトライアルを指定することで、指定のトライアルから再開することができます。
 
 ##### 例
 ```bash
-python -m aiaccel.start --config config.yaml --clean
+> aiaccel-start --config config.yaml --clean
 ```
 
 ```bash
-python -m aiaccel.start --config config.yaml --resume 5
+> aiaccel-start --config config.yaml --resume 5
 ```
 
 <hr>
@@ -597,12 +596,12 @@ ABCI:
 # 7 進捗の可視化について
 ##### 全結果の表示
 ```bash
-> python -m aiaccel.view --config config.yaml
+> aiaccel-view --config config.yaml
 ```
 
 ##### 簡易フラグの表示
 ```bash
-> python -m aiaccel.graph --config config.yaml
+> aiaccel-graph --config config.yaml
 ``` -->
 
 
