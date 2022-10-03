@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aiaccel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-21 16:01+0900\n"
+"POT-Creation-Date: 2022-10-03 16:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,11 @@ msgid "aiaccel.scheduler.job.job\\_thread module"
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.CustomMachine:1 of
-msgid "Bases: :py:class:`~transitions.core.Machine`"
+msgid "ベースクラス: :py:class:`~transitions.core.Machine`"
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Job:1 of
-msgid "Bases: :py:class:`~threading.Thread`"
+msgid "ベースクラス: :py:class:`~threading.Thread`"
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Job:1 of
@@ -300,17 +300,17 @@ msgstr ""
 #: aiaccel.scheduler.job.job_thread.Model.after_running
 #: aiaccel.scheduler.job.job_thread.Model.after_wait_result
 #: aiaccel.scheduler.job.job_thread.Model.before_failed
-#: aiaccel.scheduler.job.job_thread.Model.before_file_move
-#: aiaccel.scheduler.job.job_thread.Model.before_finished_move
+#: aiaccel.scheduler.job.job_thread.Model.before_finished
 #: aiaccel.scheduler.job.job_thread.Model.before_job_submitted
 #: aiaccel.scheduler.job.job_thread.Model.before_kill_submitted
 #: aiaccel.scheduler.job.job_thread.Model.before_runner_create
-#: aiaccel.scheduler.job.job_thread.Model.conditions_file_confirmed
+#: aiaccel.scheduler.job.job_thread.Model.change_trial_state
+#: aiaccel.scheduler.job.job_thread.Model.conditions_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_job_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_kill_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_result
 #: aiaccel.scheduler.job.job_thread.Model.conditions_runner_confirmed of
-msgid "Returns"
+msgid "戻り値"
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Job.get_machine
@@ -318,12 +318,12 @@ msgstr ""
 #: aiaccel.scheduler.job.job_thread.Job.get_state
 #: aiaccel.scheduler.job.job_thread.Job.get_state_name
 #: aiaccel.scheduler.job.job_thread.Job.is_local
-#: aiaccel.scheduler.job.job_thread.Model.conditions_file_confirmed
+#: aiaccel.scheduler.job.job_thread.Model.conditions_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_job_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_kill_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_result
 #: aiaccel.scheduler.job.job_thread.Model.conditions_runner_confirmed of
-msgid "Return type"
+msgid "戻り値の型"
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Job.get_model:1 of
@@ -373,11 +373,11 @@ msgstr ""
 #: aiaccel.scheduler.job.job_thread.Model.after_running:8
 #: aiaccel.scheduler.job.job_thread.Model.after_wait_result:8
 #: aiaccel.scheduler.job.job_thread.Model.before_failed:8
-#: aiaccel.scheduler.job.job_thread.Model.before_file_move:8
-#: aiaccel.scheduler.job.job_thread.Model.before_finished_move:8
+#: aiaccel.scheduler.job.job_thread.Model.before_finished:8
 #: aiaccel.scheduler.job.job_thread.Model.before_job_submitted:8
 #: aiaccel.scheduler.job.job_thread.Model.before_kill_submitted:8
-#: aiaccel.scheduler.job.job_thread.Model.before_runner_create:8 of
+#: aiaccel.scheduler.job.job_thread.Model.before_runner_create:8
+#: aiaccel.scheduler.job.job_thread.Model.change_trial_state:8 of
 msgid "None"
 msgstr ""
 
@@ -386,7 +386,7 @@ msgid "Schedule to run this execution."
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Model:1 of
-msgid "Bases: :py:class:`object`"
+msgid "ベースクラス: :py:class:`object`"
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Model.after_cancel:1 of
@@ -405,12 +405,12 @@ msgstr ""
 #: aiaccel.scheduler.job.job_thread.Model.after_running:3
 #: aiaccel.scheduler.job.job_thread.Model.after_wait_result:3
 #: aiaccel.scheduler.job.job_thread.Model.before_failed:3
-#: aiaccel.scheduler.job.job_thread.Model.before_file_move:3
-#: aiaccel.scheduler.job.job_thread.Model.before_finished_move:3
+#: aiaccel.scheduler.job.job_thread.Model.before_finished:3
 #: aiaccel.scheduler.job.job_thread.Model.before_job_submitted:3
 #: aiaccel.scheduler.job.job_thread.Model.before_kill_submitted:3
 #: aiaccel.scheduler.job.job_thread.Model.before_runner_create:3
-#: aiaccel.scheduler.job.job_thread.Model.conditions_file_confirmed:3
+#: aiaccel.scheduler.job.job_thread.Model.change_trial_state:3
+#: aiaccel.scheduler.job.job_thread.Model.conditions_confirmed:3
 #: aiaccel.scheduler.job.job_thread.Model.conditions_job_confirmed:3
 #: aiaccel.scheduler.job.job_thread.Model.conditions_kill_confirmed:3
 #: aiaccel.scheduler.job.job_thread.Model.conditions_result:3
@@ -430,17 +430,17 @@ msgstr ""
 #: aiaccel.scheduler.job.job_thread.Model.after_running
 #: aiaccel.scheduler.job.job_thread.Model.after_wait_result
 #: aiaccel.scheduler.job.job_thread.Model.before_failed
-#: aiaccel.scheduler.job.job_thread.Model.before_file_move
-#: aiaccel.scheduler.job.job_thread.Model.before_finished_move
+#: aiaccel.scheduler.job.job_thread.Model.before_finished
 #: aiaccel.scheduler.job.job_thread.Model.before_job_submitted
 #: aiaccel.scheduler.job.job_thread.Model.before_kill_submitted
 #: aiaccel.scheduler.job.job_thread.Model.before_runner_create
-#: aiaccel.scheduler.job.job_thread.Model.conditions_file_confirmed
+#: aiaccel.scheduler.job.job_thread.Model.change_trial_state
+#: aiaccel.scheduler.job.job_thread.Model.conditions_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_job_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_kill_confirmed
 #: aiaccel.scheduler.job.job_thread.Model.conditions_result
 #: aiaccel.scheduler.job.job_thread.Model.conditions_runner_confirmed of
-msgid "Parameters"
+msgid "パラメータ"
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Model.after_cancel:5
@@ -455,11 +455,11 @@ msgstr ""
 #: aiaccel.scheduler.job.job_thread.Model.after_running:5
 #: aiaccel.scheduler.job.job_thread.Model.after_wait_result:5
 #: aiaccel.scheduler.job.job_thread.Model.before_failed:5
-#: aiaccel.scheduler.job.job_thread.Model.before_file_move:5
-#: aiaccel.scheduler.job.job_thread.Model.before_finished_move:5
+#: aiaccel.scheduler.job.job_thread.Model.before_finished:5
 #: aiaccel.scheduler.job.job_thread.Model.before_job_submitted:5
 #: aiaccel.scheduler.job.job_thread.Model.before_runner_create:5
-#: aiaccel.scheduler.job.job_thread.Model.conditions_file_confirmed:5
+#: aiaccel.scheduler.job.job_thread.Model.change_trial_state:5
+#: aiaccel.scheduler.job.job_thread.Model.conditions_confirmed:5
 #: aiaccel.scheduler.job.job_thread.Model.conditions_job_confirmed:5
 #: aiaccel.scheduler.job.job_thread.Model.conditions_kill_confirmed:5
 #: aiaccel.scheduler.job.job_thread.Model.conditions_result:5
@@ -511,12 +511,8 @@ msgstr ""
 msgid "State transition of 'before_failed'."
 msgstr ""
 
-#: aiaccel.scheduler.job.job_thread.Model.before_file_move:1 of
-msgid "State transition of 'before_file_move'."
-msgstr ""
-
-#: aiaccel.scheduler.job.job_thread.Model.before_finished_move:1 of
-msgid "State transition of 'before_finished_move'."
+#: aiaccel.scheduler.job.job_thread.Model.before_finished:1 of
+msgid "State transition of 'before_finished'."
 msgstr ""
 
 #: aiaccel.scheduler.job.job_thread.Model.before_job_submitted:1 of
@@ -535,11 +531,15 @@ msgstr ""
 msgid "State transition of 'before_runner_create'."
 msgstr ""
 
-#: aiaccel.scheduler.job.job_thread.Model.conditions_file_confirmed:1 of
-msgid "State transition of 'conditions_file_confirmed'."
+#: aiaccel.scheduler.job.job_thread.Model.change_trial_state:1 of
+msgid "State transition of 'change_trial_state'."
 msgstr ""
 
-#: aiaccel.scheduler.job.job_thread.Model.conditions_file_confirmed:8 of
+#: aiaccel.scheduler.job.job_thread.Model.conditions_confirmed:1 of
+msgid "State transition of 'conditions_confirmed'."
+msgstr ""
+
+#: aiaccel.scheduler.job.job_thread.Model.conditions_confirmed:8 of
 msgid "A target file exists or not."
 msgstr ""
 
@@ -586,4 +586,31 @@ msgstr ""
 #: ../../source/aiaccel.scheduler.job.rst:16
 msgid "Module contents"
 msgstr ""
+
+#~ msgid "Bases: :py:class:`~transitions.core.Machine`"
+#~ msgstr ""
+
+#~ msgid "Bases: :py:class:`~threading.Thread`"
+#~ msgstr ""
+
+#~ msgid "Returns"
+#~ msgstr ""
+
+#~ msgid "Return type"
+#~ msgstr ""
+
+#~ msgid "Bases: :py:class:`object`"
+#~ msgstr ""
+
+#~ msgid "Parameters"
+#~ msgstr ""
+
+#~ msgid "State transition of 'before_file_move'."
+#~ msgstr ""
+
+#~ msgid "State transition of 'before_finished_move'."
+#~ msgstr ""
+
+#~ msgid "State transition of 'conditions_file_confirmed'."
+#~ msgstr ""
 

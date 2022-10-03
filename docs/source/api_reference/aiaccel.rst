@@ -5,16 +5,24 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 4
 
    aiaccel.abci
+   aiaccel.cli
    aiaccel.master
    aiaccel.optimizer
-   aiaccel.scheduler
-   aiaccel.util
+   aiaccel.storage
 
 Submodules
 ----------
+
+aiaccel.argument module
+-----------------------
+
+.. automodule:: aiaccel.argument
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 aiaccel.common module
 ---------------------
@@ -44,6 +52,14 @@ aiaccel.parameter module
 ------------------------
 
 .. automodule:: aiaccel.parameter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aiaccel.workspace module
+------------------------
+
+.. automodule:: aiaccel.workspace
    :members:
    :undoc-members:
    :show-inheritance:

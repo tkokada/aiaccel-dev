@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aiaccel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-21 16:01+0900\n"
+"POT-Creation-Date: 2022-10-03 16:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,76 +29,53 @@ msgstr ""
 msgid "aiaccel.master.evaluator.abstract\\_evaluator module"
 msgstr ""
 
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator:1 of
-msgid "Bases: :py:class:`object`"
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator:1 of
-msgid "An abstract class for MaximizeEvaluator and MinimizeEvaluator."
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.evaluate:1
-#: aiaccel.master.evaluator.maximize_evaluator.MaximizeEvaluator.evaluate:1
-#: aiaccel.master.evaluator.minimize_evaluator.MinimizeEvaluator.evaluate:1 of
-msgid "Run an evaluation."
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.evaluate
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.print
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.save
-#: aiaccel.master.evaluator.maximize_evaluator.MaximizeEvaluator.evaluate
-#: aiaccel.master.evaluator.minimize_evaluator.MinimizeEvaluator.evaluate of
-msgid "Returns"
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.evaluate:3
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.print:3
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.save:3
-#: aiaccel.master.evaluator.maximize_evaluator.MaximizeEvaluator.evaluate:3
-#: aiaccel.master.evaluator.minimize_evaluator.MinimizeEvaluator.evaluate:3 of
-msgid "None"
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.evaluate of
-msgid "Raises"
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.evaluate:5 of
-msgid "Causes when the inherited class does not     implement."
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.print:1 of
-msgid "Print current results."
-msgstr ""
-
-#: aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator.save:1 of
-msgid "Save current results to a file."
-msgstr ""
-
 #: ../../source/aiaccel.master.evaluator.rst:16
 msgid "aiaccel.master.evaluator.maximize\\_evaluator module"
-msgstr ""
-
-#: aiaccel.master.evaluator.maximize_evaluator.MaximizeEvaluator:1
-#: aiaccel.master.evaluator.minimize_evaluator.MinimizeEvaluator:1 of
-msgid ""
-"Bases: "
-":py:class:`~aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator`"
-msgstr ""
-
-#: aiaccel.master.evaluator.maximize_evaluator.MaximizeEvaluator:1 of
-msgid "A evaluator class to maximize the results."
 msgstr ""
 
 #: ../../source/aiaccel.master.evaluator.rst:24
 msgid "aiaccel.master.evaluator.minimize\\_evaluator module"
 msgstr ""
 
-#: aiaccel.master.evaluator.minimize_evaluator.MinimizeEvaluator:1 of
-msgid "A evaluator class to minimize the results."
-msgstr ""
-
 #: ../../source/aiaccel.master.evaluator.rst:32
 msgid "Module contents"
 msgstr ""
+
+#~ msgid "Bases: :py:class:`object`"
+#~ msgstr ""
+
+#~ msgid "An abstract class for MaximizeEvaluator and MinimizeEvaluator."
+#~ msgstr ""
+
+#~ msgid "Run an evaluation."
+#~ msgstr ""
+
+#~ msgid "Returns"
+#~ msgstr ""
+
+#~ msgid "None"
+#~ msgstr ""
+
+#~ msgid "Raises"
+#~ msgstr ""
+
+#~ msgid "Causes when the inherited class does not     implement."
+#~ msgstr ""
+
+#~ msgid "Print current results."
+#~ msgstr ""
+
+#~ msgid "Save current results to a file."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Bases: "
+#~ ":py:class:`~aiaccel.master.evaluator.abstract_evaluator.AbstractEvaluator`"
+#~ msgstr ""
+
+#~ msgid "A evaluator class to maximize the results."
+#~ msgstr ""
+
+#~ msgid "A evaluator class to minimize the results."
+#~ msgstr ""
 

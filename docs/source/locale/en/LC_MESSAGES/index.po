@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aiaccel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-21 16:01+0900\n"
+"POT-Creation-Date: 2022-10-03 16:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,65 +17,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
 
+#: ../../source/index.rst:16
+msgid "オーバービュー:"
+msgstr ""
+
+#: ../../source/index.rst:22
+msgid "インストール:"
+msgstr ""
+
+#: ../../source/index.rst:28
+msgid "利用例:"
+msgstr ""
+
+#: ../../source/index.rst:34
+msgid "ユーザーガイド:"
+msgstr ""
+
+#: ../../source/index.rst:41
+msgid "ディベロッパーガイド:"
+msgstr ""
+
+#: ../../source/index.rst:48
+msgid "コントリビューションガイド:"
+msgstr ""
+
+#: ../../source/index.rst:54
+msgid "リファレンス:"
+msgstr ""
+
+#: ../../source/index.rst:60
+msgid "コードリファレンス"
+msgstr ""
+
 #: ../../source/index.rst:8
-msgid "aiaccel"
+msgid "aiaccelドキュメント"
 msgstr ""
 
 #: ../../source/index.rst:9
 msgid ""
-"A hyperparameter optimization library for `AI Bridging Cloud "
-"Infrastructure (ABCI)`_. This software solves hyperparameter "
-"optimizations related to AI technologies including deep learning and "
-"multi-agent simulation. The software currently supports five optimization"
-" algorithms: random search, grid search, sobol sequence, nelder-mead "
-"method, and TPE."
+"本ソフトウェアは、AI Bridging Cloud Infrastructure (ABCI)`_ "
+"のためのハイパーパラメータ最適化ライブラリです。 "
+"ディープラーニングやマルチエージェントシミュレーションなどのAI技術に関連するハイパーパラメータ最適化を解決します。 "
+"現在、ランダムサーチ、グリッドサーチ、ソボルシーケンス、ネルダーミード法、TPEの5つの最適化アルゴリズムに対応しています。"
 msgstr ""
 
-#: ../../source/index.rst:18
-msgid "Installation"
+#: ../../source/index.rst:67
+msgid "索引と検索"
 msgstr ""
 
-#: ../../source/index.rst:19
-msgid "The software can be installed using `pip`."
-msgstr ""
-
-#: ../../source/index.rst:27
-msgid "User Guide"
-msgstr ""
-
-#: ../../source/index.rst:29
-msgid ":doc:`./manual_jp`"
-msgstr ""
-
-#: ../../source/index.rst:30
-msgid ":doc:`./manual_en`"
-msgstr ""
-
-#: ../../source/index.rst:34
-msgid "Guide for adding an optimizer"
-msgstr ""
-
-#: ../../source/index.rst:36
-msgid ":doc:`./optimizer_jp`"
-msgstr ""
-
-#: ../../source/index.rst:40
-msgid "API Reference"
-msgstr ""
-
-#: ../../source/index.rst:53
-msgid "Indices and tables"
-msgstr ""
-
-#: ../../source/index.rst:55
+#: ../../source/index.rst:69
 msgid ":ref:`genindex`"
 msgstr ""
 
-#: ../../source/index.rst:56
+#: ../../source/index.rst:70
 msgid ":ref:`modindex`"
 msgstr ""
 
-#: ../../source/index.rst:57
+#: ../../source/index.rst:71
 msgid ":ref:`search`"
 msgstr ""
+
+#: ../../source/index.rst:74
+msgid "謝辞"
+msgstr ""
+
+#: ../../source/index.rst:75
+msgid "この成果の一部は、国立研究開発法人新エネルギー・産業技術総合開発機構(NEDO)の委託業務として開発されたものです。"
+msgstr ""
+
+#: ../../source/index.rst:76
+msgid "TPEアルゴリズムは Optuna を利用しました。"
+msgstr ""
+
+#~ msgid "aiaccel"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A hyperparameter optimization library for "
+#~ "`AI Bridging Cloud Infrastructure (ABCI)`_."
+#~ " This software solves hyperparameter "
+#~ "optimizations related to AI technologies "
+#~ "including deep learning and multi-agent"
+#~ " simulation. The software currently "
+#~ "supports five optimization algorithms: random"
+#~ " search, grid search, sobol sequence, "
+#~ "nelder-mead method, and TPE."
+#~ msgstr ""
+
+#~ msgid "Installation"
+#~ msgstr ""
+
+#~ msgid "The software can be installed using `pip`."
+#~ msgstr ""
+
+#~ msgid "User Guide"
+#~ msgstr ""
+
+#~ msgid ":doc:`./manual_jp`"
+#~ msgstr ""
+
+#~ msgid ":doc:`./manual_en`"
+#~ msgstr ""
+
+#~ msgid "Guide for adding an optimizer"
+#~ msgstr ""
+
+#~ msgid ":doc:`./optimizer_jp`"
+#~ msgstr ""
+
+#~ msgid "API Reference"
+#~ msgstr ""
+
+#~ msgid "Indices and tables"
+#~ msgstr ""
 

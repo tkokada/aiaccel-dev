@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aiaccel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-21 16:01+0900\n"
+"POT-Creation-Date: 2022-10-03 16:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,7 @@ msgstr ""
 #: aiaccel.util.filesystem.get_file_hp_ready
 #: aiaccel.util.filesystem.get_file_hp_running
 #: aiaccel.util.filesystem.get_file_result
+#: aiaccel.util.filesystem.get_file_result_hp
 #: aiaccel.util.filesystem.interprocess_lock_file
 #: aiaccel.util.filesystem.load_yaml aiaccel.util.filesystem.make_directories
 #: aiaccel.util.filesystem.make_directory aiaccel.util.filesystem.move_file
@@ -50,17 +51,10 @@ msgstr ""
 #: aiaccel.util.name.generate_random_name aiaccel.util.process.exec_runner
 #: aiaccel.util.process.is_process_running aiaccel.util.process.kill_process
 #: aiaccel.util.process.parse_psaux
-#: aiaccel.util.serialize.deserialize_native_random
-#: aiaccel.util.serialize.deserialize_numpy_random
-#: aiaccel.util.serialize.deserialize_state
-#: aiaccel.util.serialize.resub_loop_count
-#: aiaccel.util.serialize.serialize_native_random
-#: aiaccel.util.serialize.serialize_numpy_random
-#: aiaccel.util.serialize.serialize_state
 #: aiaccel.util.time_tools.get_datetime_from_string
 #: aiaccel.util.time_tools.get_time_delta
 #: aiaccel.util.time_tools.get_time_string_from_object of
-msgid "Parameters"
+msgid "パラメータ"
 msgstr ""
 
 #: aiaccel.util.filesystem.check_alive_file:3 of
@@ -81,6 +75,7 @@ msgstr ""
 #: aiaccel.util.filesystem.get_file_hp_ready
 #: aiaccel.util.filesystem.get_file_hp_running
 #: aiaccel.util.filesystem.get_file_result
+#: aiaccel.util.filesystem.get_file_result_hp
 #: aiaccel.util.filesystem.interprocess_lock_file
 #: aiaccel.util.filesystem.load_yaml aiaccel.util.filesystem.make_directories
 #: aiaccel.util.filesystem.make_directory aiaccel.util.filesystem.move_file
@@ -90,18 +85,11 @@ msgstr ""
 #: aiaccel.util.process.is_process_running aiaccel.util.process.kill_process
 #: aiaccel.util.process.parse_psaux aiaccel.util.process.ps2joblist
 #: aiaccel.util.process.subprocess_ps
-#: aiaccel.util.serialize.deserialize_native_random
-#: aiaccel.util.serialize.deserialize_numpy_random
-#: aiaccel.util.serialize.deserialize_state
-#: aiaccel.util.serialize.resub_loop_count
-#: aiaccel.util.serialize.serialize_native_random
-#: aiaccel.util.serialize.serialize_numpy_random
-#: aiaccel.util.serialize.serialize_state
 #: aiaccel.util.time_tools.get_datetime_from_string
 #: aiaccel.util.time_tools.get_time_delta aiaccel.util.time_tools.get_time_now
 #: aiaccel.util.time_tools.get_time_now_object
 #: aiaccel.util.time_tools.get_time_string_from_object of
-msgid "Returns"
+msgid "戻り値"
 msgstr ""
 
 #: aiaccel.util.filesystem.check_alive_file:8 of
@@ -114,19 +102,18 @@ msgstr ""
 #: aiaccel.util.filesystem.get_file_hp_ready
 #: aiaccel.util.filesystem.get_file_hp_running
 #: aiaccel.util.filesystem.get_file_result
+#: aiaccel.util.filesystem.get_file_result_hp
 #: aiaccel.util.filesystem.interprocess_lock_file
 #: aiaccel.util.filesystem.load_yaml aiaccel.util.filesystem.to_path
 #: aiaccel.util.logger.str_to_logging_level
 #: aiaccel.util.name.generate_random_name aiaccel.util.process.exec_runner
 #: aiaccel.util.process.is_process_running aiaccel.util.process.parse_psaux
 #: aiaccel.util.process.ps2joblist aiaccel.util.process.subprocess_ps
-#: aiaccel.util.serialize.deserialize_state
-#: aiaccel.util.serialize.resub_loop_count
 #: aiaccel.util.time_tools.get_datetime_from_string
 #: aiaccel.util.time_tools.get_time_delta aiaccel.util.time_tools.get_time_now
 #: aiaccel.util.time_tools.get_time_now_object
 #: aiaccel.util.time_tools.get_time_string_from_object of
-msgid "Return type"
+msgid "戻り値の型"
 msgstr ""
 
 #: aiaccel.util.filesystem.clean_directory:1 of
@@ -157,11 +144,7 @@ msgstr ""
 #: aiaccel.util.filesystem.make_directory:8
 #: aiaccel.util.filesystem.move_file:10
 #: aiaccel.util.process.OutputHandler.run:3 aiaccel.util.process.kill_process:6
-#: aiaccel.util.serialize.deserialize_native_random:6
-#: aiaccel.util.serialize.deserialize_numpy_random:6
-#: aiaccel.util.serialize.serialize_native_random:6
-#: aiaccel.util.serialize.serialize_numpy_random:6
-#: aiaccel.util.serialize.serialize_state:12 of
+#: of
 msgid "None"
 msgstr ""
 
@@ -260,12 +243,12 @@ msgstr ""
 #: aiaccel.util.filesystem.get_file_hp_ready:5
 #: aiaccel.util.filesystem.get_file_hp_running:5
 #: aiaccel.util.filesystem.get_file_result:5
+#: aiaccel.util.filesystem.get_file_result_hp:5
 #: aiaccel.util.filesystem.interprocess_lock_file:6
 #: aiaccel.util.filesystem.load_yaml:5
 #: aiaccel.util.filesystem.make_directories:5
 #: aiaccel.util.filesystem.make_directory:5 aiaccel.util.filesystem.move_file:7
-#: aiaccel.util.serialize.deserialize_state:7
-#: aiaccel.util.serialize.serialize_state:9 of
+#: of
 msgid "A directory to store lock files."
 msgstr ""
 
@@ -309,15 +292,18 @@ msgstr ""
 msgid "Files in hp/running directory."
 msgstr ""
 
-#: aiaccel.util.filesystem.get_file_result:1 of
+#: aiaccel.util.filesystem.get_file_result:1
+#: aiaccel.util.filesystem.get_file_result_hp:1 of
 msgid "Get files in result directory."
 msgstr ""
 
-#: aiaccel.util.filesystem.get_file_result:3 of
+#: aiaccel.util.filesystem.get_file_result:3
+#: aiaccel.util.filesystem.get_file_result_hp:3 of
 msgid "A path to result directory."
 msgstr ""
 
-#: aiaccel.util.filesystem.get_file_result:8 of
+#: aiaccel.util.filesystem.get_file_result:8
+#: aiaccel.util.filesystem.get_file_result_hp:8 of
 msgid "Files in result directory."
 msgstr ""
 
@@ -401,10 +387,8 @@ msgstr ""
 msgid "It returns a logging level."
 msgstr ""
 
-#: aiaccel.util.logger.str_to_logging_level aiaccel.util.process.ps2joblist
-#: aiaccel.util.serialize.deserialize_native_random
-#: aiaccel.util.serialize.deserialize_numpy_random of
-msgid "Raises"
+#: aiaccel.util.logger.str_to_logging_level aiaccel.util.process.ps2joblist of
+msgid "例外"
 msgstr ""
 
 #: aiaccel.util.logger.str_to_logging_level:9 of
@@ -432,7 +416,7 @@ msgid "aiaccel.util.process module"
 msgstr ""
 
 #: aiaccel.util.process.OutputHandler:1 of
-msgid "Bases: :py:class:`~threading.Thread`"
+msgid "ベースクラス: :py:class:`~threading.Thread`"
 msgstr ""
 
 #: aiaccel.util.process.OutputHandler:1 of
@@ -551,79 +535,8 @@ msgstr ""
 msgid "aiaccel.util.serialize module"
 msgstr ""
 
-#: aiaccel.util.serialize.deserialize_native_random:1 of
-msgid "Deserialize a native random object."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_native_random:3 of
-msgid "A path of serialized random object."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_native_random:8 of
-msgid "Causes when a serialized random object file is not     found."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_numpy_random:1 of
-msgid "Deserialize a numpy random object."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_numpy_random:3 of
-msgid "A serialized numpy object."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_numpy_random:8 of
-msgid "Causes when a serialized numpy random object file is     not found."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_state:1 of
-msgid "Deserialize a state of an execution from a state directory."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_state:3
-#: aiaccel.util.serialize.serialize_state:3 of
-msgid "A path of a state directory."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_state:5
-#: aiaccel.util.serialize.serialize_state:5 of
-msgid "A class name of caller module."
-msgstr ""
-
-#: aiaccel.util.serialize.deserialize_state:10
-#: aiaccel.util.serialize.resub_loop_count:6 of
-msgid "A loop count."
-msgstr ""
-
-#: aiaccel.util.serialize.resub_loop_count:1 of
-msgid "Find a loop count from a file name."
-msgstr ""
-
-#: aiaccel.util.serialize.resub_loop_count:3 of
-msgid "A path of a serialized native random file."
-msgstr ""
-
-#: aiaccel.util.serialize.serialize_native_random:1 of
-msgid "Serialize a current native random object."
-msgstr ""
-
-#: aiaccel.util.serialize.serialize_native_random:3 of
-msgid "A path to store a random object."
-msgstr ""
-
-#: aiaccel.util.serialize.serialize_numpy_random:1 of
-msgid "Serialize a current numpy random object."
-msgstr ""
-
-#: aiaccel.util.serialize.serialize_numpy_random:3 of
-msgid "A path to store a numpy random object."
-msgstr ""
-
-#: aiaccel.util.serialize.serialize_state:1 of
-msgid "Serialize current state."
-msgstr ""
-
-#: aiaccel.util.serialize.serialize_state:7 of
-msgid "A loop count"
+#: aiaccel.util.serialize.Serializer:1 of
+msgid "ベースクラス: :py:class:`object`"
 msgstr ""
 
 #: ../../source/aiaccel.util.rst:48
@@ -687,4 +600,73 @@ msgstr ""
 #: ../../source/aiaccel.util.rst:56
 msgid "Module contents"
 msgstr ""
+
+#~ msgid "Parameters"
+#~ msgstr ""
+
+#~ msgid "Returns"
+#~ msgstr ""
+
+#~ msgid "Return type"
+#~ msgstr ""
+
+#~ msgid "Raises"
+#~ msgstr ""
+
+#~ msgid "Bases: :py:class:`~threading.Thread`"
+#~ msgstr ""
+
+#~ msgid "Deserialize a native random object."
+#~ msgstr ""
+
+#~ msgid "A path of serialized random object."
+#~ msgstr ""
+
+#~ msgid "Causes when a serialized random object file is not     found."
+#~ msgstr ""
+
+#~ msgid "Deserialize a numpy random object."
+#~ msgstr ""
+
+#~ msgid "A serialized numpy object."
+#~ msgstr ""
+
+#~ msgid "Causes when a serialized numpy random object file is     not found."
+#~ msgstr ""
+
+#~ msgid "Deserialize a state of an execution from a state directory."
+#~ msgstr ""
+
+#~ msgid "A path of a state directory."
+#~ msgstr ""
+
+#~ msgid "A class name of caller module."
+#~ msgstr ""
+
+#~ msgid "A loop count."
+#~ msgstr ""
+
+#~ msgid "Find a loop count from a file name."
+#~ msgstr ""
+
+#~ msgid "A path of a serialized native random file."
+#~ msgstr ""
+
+#~ msgid "Serialize a current native random object."
+#~ msgstr ""
+
+#~ msgid "A path to store a random object."
+#~ msgstr ""
+
+#~ msgid "Serialize a current numpy random object."
+#~ msgstr ""
+
+#~ msgid "A path to store a numpy random object."
+#~ msgstr ""
+
+#~ msgid "Serialize current state."
+#~ msgstr ""
+
+#~ msgid "A loop count"
+#~ msgstr ""
 

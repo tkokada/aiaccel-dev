@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aiaccel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-21 16:01+0900\n"
+"POT-Creation-Date: 2022-10-03 16:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,162 +33,16 @@ msgstr ""
 msgid "aiaccel.common module"
 msgstr ""
 
-#: aiaccel.common.get_file_random:1 of
-msgid "Get a file path to serialize a random generator."
+#: aiaccel.common:1 of
+msgid "Common variables and methods."
 msgstr ""
 
-#: aiaccel.common.get_file_random
-#: aiaccel.common.get_module_type_from_class_name
-#: aiaccel.config.ConfileWrapper.get
-#: aiaccel.config.FormatChecker.check_categorical
-#: aiaccel.config.FormatChecker.check_hyperparameters_item
-#: aiaccel.config.FormatChecker.check_ordinal
-#: aiaccel.config.FormatChecker.check_uniform_float
-#: aiaccel.config.FormatChecker.check_uniform_int
-#: aiaccel.config.JsonOrYamlObjectConfig.get_property
-#: aiaccel.module.AbstractModule.check_error
-#: aiaccel.module.AbstractModule.curr_trial_number
-#: aiaccel.module.AbstractModule.exit_alive
-#: aiaccel.module.AbstractModule.get_native_random_state
-#: aiaccel.module.AbstractModule.get_numpy_random_state
-#: aiaccel.module.AbstractModule.resume
-#: aiaccel.module.AbstractModule.set_barrier
-#: aiaccel.module.AbstractModule.set_logger
-#: aiaccel.module.AbstractModule.set_native_random_seed
-#: aiaccel.module.AbstractModule.set_native_random_state
-#: aiaccel.module.AbstractModule.set_numpy_random_seed
-#: aiaccel.module.AbstractModule.set_numpy_random_state
-#: aiaccel.module.AbstractModule.stop aiaccel.parameter.HyperParameter.sample
-#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
-#: aiaccel.parameter.HyperParameterConfiguration.sample
-#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options
-#: aiaccel.parameter.get_type aiaccel.parameter.load_parameter
-#: aiaccel.wrapper_tools.create_runner_command
-#: aiaccel.wrapper_tools.save_result of
-msgid "Parameters"
+#: aiaccel.common:3 of
+msgid "Import this as follows:"
 msgstr ""
 
-#: aiaccel.common.get_file_random:3 of
-msgid "A path to a state directory."
-msgstr ""
-
-#: aiaccel.common.get_file_random:5 of
-msgid "A class name of a caller module."
-msgstr ""
-
-#: aiaccel.common.get_file_random:7 of
-msgid "A loop count."
-msgstr ""
-
-#: aiaccel.common.get_file_random:9 of
-msgid "A random type in native or numpy."
-msgstr ""
-
-#: aiaccel.common.get_file_random
-#: aiaccel.common.get_module_type_from_class_name
-#: aiaccel.config.Config.hps_format_check aiaccel.config.ConfigEntry.get
-#: aiaccel.config.ConfileWrapper.get
-#: aiaccel.config.JsonOrYamlObjectConfig.get_property
-#: aiaccel.config.JsonOrYamlObjectConfig.to_dict aiaccel.config.load_config
-#: aiaccel.module.AbstractModule.check_error
-#: aiaccel.module.AbstractModule.check_finished
-#: aiaccel.module.AbstractModule.check_work_directory
-#: aiaccel.module.AbstractModule.curr_trial_number
-#: aiaccel.module.AbstractModule.exit_alive
-#: aiaccel.module.AbstractModule.get_dict_state
-#: aiaccel.module.AbstractModule.get_module_type_alive_file
-#: aiaccel.module.AbstractModule.get_native_random_state
-#: aiaccel.module.AbstractModule.get_numpy_random_state
-#: aiaccel.module.AbstractModule.inner_loop_main_process
-#: aiaccel.module.AbstractModule.inner_loop_post_process
-#: aiaccel.module.AbstractModule.inner_loop_pre_process
-#: aiaccel.module.AbstractModule.is_barrier
-#: aiaccel.module.AbstractModule.is_process_alive
-#: aiaccel.module.AbstractModule.loop
-#: aiaccel.module.AbstractModule.loop_post_process
-#: aiaccel.module.AbstractModule.loop_pre_process
-#: aiaccel.module.AbstractModule.make_work_directory
-#: aiaccel.module.AbstractModule.post_process
-#: aiaccel.module.AbstractModule.pre_process
-#: aiaccel.module.AbstractModule.print_dict_state
-#: aiaccel.module.AbstractModule.resume
-#: aiaccel.module.AbstractModule.set_barrier
-#: aiaccel.module.AbstractModule.set_logger
-#: aiaccel.module.AbstractModule.set_native_random_seed
-#: aiaccel.module.AbstractModule.set_native_random_state
-#: aiaccel.module.AbstractModule.set_numpy_random_seed
-#: aiaccel.module.AbstractModule.set_numpy_random_state
-#: aiaccel.module.AbstractModule.start aiaccel.module.AbstractModule.stop
-#: aiaccel.parameter.HyperParameter.sample
-#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
-#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_dict
-#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_list
-#: aiaccel.parameter.HyperParameterConfiguration.sample
-#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options
-#: aiaccel.parameter.get_type aiaccel.parameter.load_parameter
-#: aiaccel.wrapper_tools.create_runner_command
-#: aiaccel.wrapper_tools.save_result of
-msgid "Returns"
-msgstr ""
-
-#: aiaccel.common.get_file_random:12 of
-msgid "A path to serialize a specified random generator."
-msgstr ""
-
-#: aiaccel.common.get_file_random
-#: aiaccel.common.get_module_type_from_class_name
-#: aiaccel.config.ConfileWrapper.get
-#: aiaccel.config.JsonOrYamlObjectConfig.get_property
-#: aiaccel.config.JsonOrYamlObjectConfig.to_dict aiaccel.config.load_config
-#: aiaccel.module.AbstractModule.check_error
-#: aiaccel.module.AbstractModule.check_finished
-#: aiaccel.module.AbstractModule.check_work_directory
-#: aiaccel.module.AbstractModule.curr_trial_number
-#: aiaccel.module.AbstractModule.get_module_type_alive_file
-#: aiaccel.module.AbstractModule.is_barrier
-#: aiaccel.module.AbstractModule.is_process_alive
-#: aiaccel.parameter.HyperParameter.sample
-#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
-#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_dict
-#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_list
-#: aiaccel.parameter.HyperParameterConfiguration.sample
-#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options
-#: aiaccel.parameter.get_type aiaccel.parameter.load_parameter of
-msgid "Return type"
-msgstr ""
-
-#: aiaccel.common.get_file_random
-#: aiaccel.common.get_module_type_from_class_name
-#: aiaccel.module.AbstractModule.inner_loop_main_process
-#: aiaccel.module.AbstractModule.inner_loop_post_process
-#: aiaccel.module.AbstractModule.inner_loop_pre_process
-#: aiaccel.module.AbstractModule.loop_post_process
-#: aiaccel.module.AbstractModule.make_work_directory
-#: aiaccel.module.AbstractModule.post_process
-#: aiaccel.parameter.HyperParameter.sample
-#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
-#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options of
-msgid "Raises"
-msgstr ""
-
-#: aiaccel.common.get_file_random:15 of
-msgid "if invalid random_type is set."
-msgstr ""
-
-#: aiaccel.common.get_module_type_from_class_name:1 of
-msgid "Get a module name(master, optimizer or scheduler) from class name."
-msgstr ""
-
-#: aiaccel.common.get_module_type_from_class_name:3 of
-msgid "A class name of caller."
-msgstr ""
-
-#: aiaccel.common.get_module_type_from_class_name:6 of
-msgid "A module name string \"master\", \"optimizer\" or \"scheduler\"."
-msgstr ""
-
-#: aiaccel.common.get_module_type_from_class_name:9 of
-msgid "if class_name does not match module names."
+#: aiaccel.common:4 of
+msgid "import aiaccel"
 msgstr ""
 
 #: ../../source/aiaccel.rst:28
@@ -197,10 +51,9 @@ msgstr ""
 
 #: aiaccel.config.BaseConfig:1 aiaccel.config.Config:1
 #: aiaccel.config.ConfigEntry:1 aiaccel.config.ConfileWrapper:1
-#: aiaccel.config.FormatChecker:1 aiaccel.module.AbstractModule:1
-#: aiaccel.parameter.HyperParameter:1
+#: aiaccel.module.AbstractModule:1 aiaccel.parameter.HyperParameter:1
 #: aiaccel.parameter.HyperParameterConfiguration:1 of
-msgid "Bases: :py:class:`object`"
+msgid "ベースクラス: :py:class:`object`"
 msgstr ""
 
 #: aiaccel.config.BaseConfig:1 aiaccel.config.JsonOrYamlObjectConfig:1 of
@@ -219,47 +72,6 @@ msgstr ""
 msgid "Define the configuration of the configuration file"
 msgstr ""
 
-#: aiaccel.config.Config.hps_format_check:1 of
-msgid "Check the hyperparameter items. :param None:"
-msgstr ""
-
-#: aiaccel.config.Config.hps_format_check:4
-#: aiaccel.module.AbstractModule.exit_alive:6
-#: aiaccel.module.AbstractModule.get_dict_state:3
-#: aiaccel.module.AbstractModule.inner_loop_main_process:3
-#: aiaccel.module.AbstractModule.inner_loop_post_process:4
-#: aiaccel.module.AbstractModule.inner_loop_pre_process:4
-#: aiaccel.module.AbstractModule.loop:4
-#: aiaccel.module.AbstractModule.loop_post_process:3
-#: aiaccel.module.AbstractModule.loop_pre_process:3
-#: aiaccel.module.AbstractModule.make_work_directory:3
-#: aiaccel.module.AbstractModule.post_process:3
-#: aiaccel.module.AbstractModule.pre_process:3
-#: aiaccel.module.AbstractModule.print_dict_state:3
-#: aiaccel.module.AbstractModule.resume:6
-#: aiaccel.module.AbstractModule.set_barrier:6
-#: aiaccel.module.AbstractModule.set_logger:14
-#: aiaccel.module.AbstractModule.set_native_random_seed:5
-#: aiaccel.module.AbstractModule.set_native_random_state:6
-#: aiaccel.module.AbstractModule.set_numpy_random_seed:5
-#: aiaccel.module.AbstractModule.set_numpy_random_state:6
-#: aiaccel.module.AbstractModule.start:3 aiaccel.module.AbstractModule.stop:5
-#: aiaccel.wrapper_tools.save_result:18 of
-msgid "None"
-msgstr ""
-
-#: aiaccel.config.Config.hps_format_check:11 of
-msgid "Note"
-msgstr ""
-
-#: aiaccel.config.Config.hps_format_check:7 of
-msgid ""
-"Available items - Random: uniform_float, uniform_int, categorical, "
-"ordinal - Grid: uniform_float, uniform_int, categorical, ordinal - Sobol:"
-" uniform_float, uniform_int - NM: uniform_float, uniform_int - TPE: "
-"niform_float, uniform_int, categorical, ordinal"
-msgstr ""
-
 #: aiaccel.config.ConfigEntry:1 of
 msgid ""
 "A class for defining values in a configuration file         or for "
@@ -267,7 +79,7 @@ msgid ""
 msgstr ""
 
 #: aiaccel.config.ConfigEntry:4 of
-msgid "Example"
+msgid "サンプル"
 msgstr ""
 
 #: aiaccel.config.ConfigEntry:10 of
@@ -276,9 +88,8 @@ msgstr ""
 
 #: aiaccel.config.ConfigEntry:6 of
 msgid ""
-"config_file_path=config_file_path, type=[str], "
-"default=_DEFAULT_WORKSPACE, warning=warn, group=\"generic\", "
-"keys=(\"workspace\")"
+"config=config, type=[str], default=_DEFAULT_WORKSPACE, warning=warn, "
+"group=\"generic\", keys=(\"workspace\")"
 msgstr ""
 
 #: aiaccel.config.ConfigEntry:12 of
@@ -287,6 +98,46 @@ msgstr ""
 
 #: aiaccel.config.ConfigEntry.empty_if_error:1 of
 msgid "If the value is not set, it will force an error to occur."
+msgstr ""
+
+#: aiaccel.config.ConfigEntry.get aiaccel.config.ConfileWrapper.get
+#: aiaccel.config.JsonOrYamlObjectConfig.get_property
+#: aiaccel.config.JsonOrYamlObjectConfig.to_dict aiaccel.config.load_config
+#: aiaccel.module.AbstractModule.check_error
+#: aiaccel.module.AbstractModule.check_finished
+#: aiaccel.module.AbstractModule.current_max_trial_number
+#: aiaccel.module.AbstractModule.exit_alive
+#: aiaccel.module.AbstractModule.get_each_state_count
+#: aiaccel.module.AbstractModule.get_module_type
+#: aiaccel.module.AbstractModule.get_native_random_state
+#: aiaccel.module.AbstractModule.get_numpy_random_state
+#: aiaccel.module.AbstractModule.inner_loop_main_process
+#: aiaccel.module.AbstractModule.inner_loop_post_process
+#: aiaccel.module.AbstractModule.inner_loop_pre_process
+#: aiaccel.module.AbstractModule.is_process_alive
+#: aiaccel.module.AbstractModule.loop
+#: aiaccel.module.AbstractModule.loop_post_process
+#: aiaccel.module.AbstractModule.loop_pre_process
+#: aiaccel.module.AbstractModule.post_process
+#: aiaccel.module.AbstractModule.pre_process
+#: aiaccel.module.AbstractModule.print_dict_state
+#: aiaccel.module.AbstractModule.resume
+#: aiaccel.module.AbstractModule.set_logger
+#: aiaccel.module.AbstractModule.set_native_random_seed
+#: aiaccel.module.AbstractModule.set_native_random_state
+#: aiaccel.module.AbstractModule.set_numpy_random_seed
+#: aiaccel.module.AbstractModule.set_numpy_random_state
+#: aiaccel.module.AbstractModule.start aiaccel.module.AbstractModule.stop
+#: aiaccel.parameter.HyperParameter.sample
+#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
+#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_dict
+#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_list
+#: aiaccel.parameter.HyperParameterConfiguration.sample
+#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options
+#: aiaccel.parameter.get_type aiaccel.parameter.load_parameter
+#: aiaccel.wrapper_tools.create_runner_command
+#: aiaccel.wrapper_tools.save_result of
+msgid "戻り値"
 msgstr ""
 
 #: aiaccel.config.ConfigEntry.get:1 of
@@ -324,6 +175,29 @@ msgstr ""
 msgid "Get a property with specified keys."
 msgstr ""
 
+#: aiaccel.config.ConfileWrapper.get
+#: aiaccel.config.JsonOrYamlObjectConfig.get_property
+#: aiaccel.module.AbstractModule.check_error
+#: aiaccel.module.AbstractModule.current_max_trial_number
+#: aiaccel.module.AbstractModule.exit_alive
+#: aiaccel.module.AbstractModule.get_native_random_state
+#: aiaccel.module.AbstractModule.get_numpy_random_state
+#: aiaccel.module.AbstractModule.resume
+#: aiaccel.module.AbstractModule.set_logger
+#: aiaccel.module.AbstractModule.set_native_random_seed
+#: aiaccel.module.AbstractModule.set_native_random_state
+#: aiaccel.module.AbstractModule.set_numpy_random_seed
+#: aiaccel.module.AbstractModule.set_numpy_random_state
+#: aiaccel.module.AbstractModule.stop aiaccel.parameter.HyperParameter.sample
+#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
+#: aiaccel.parameter.HyperParameterConfiguration.sample
+#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options
+#: aiaccel.parameter.get_type aiaccel.parameter.load_parameter
+#: aiaccel.wrapper_tools.create_runner_command
+#: aiaccel.wrapper_tools.save_result of
+msgid "パラメータ"
+msgstr ""
+
 #: aiaccel.config.ConfileWrapper.get:3 of
 msgid "A key for the property"
 msgstr ""
@@ -336,123 +210,26 @@ msgstr ""
 msgid "A property for the specified keys."
 msgstr ""
 
-#: aiaccel.config.FormatChecker:1 of
-msgid "Configuration file format check"
-msgstr ""
-
-#: aiaccel.config.FormatChecker:12 of
-msgid "List of data types supported by this search algorithm."
-msgstr ""
-
-#: aiaccel.config.FormatChecker:12 of
-msgid "Items"
-msgstr ""
-
-#: aiaccel.config.FormatChecker:9 of
-msgid "uniform_float"
-msgstr ""
-
-#: aiaccel.config.FormatChecker:10 of
-msgid "uniform_int"
-msgstr ""
-
-#: aiaccel.config.FormatChecker:11 of
-msgid "categorical"
-msgstr ""
-
-#: aiaccel.config.FormatChecker:12 of
-msgid "ordinal"
-msgstr ""
-
-#: aiaccel.config.FormatChecker aiaccel.module.AbstractModule
-#: aiaccel.parameter.HyperParameter
-#: aiaccel.parameter.HyperParameterConfiguration of
-msgid "type"
-msgstr ""
-
-#: aiaccel.config.FormatChecker:14 aiaccel.config.FormatChecker:20 of
-msgid "list"
-msgstr ""
-
-#: aiaccel.config.FormatChecker:18 of
-msgid "Items of hyperparametes."
-msgstr ""
-
-#: aiaccel.config.FormatChecker:24 of
-msgid "search algorithm search algorithm."
-msgstr ""
-
-#: aiaccel.config.FormatChecker:26 aiaccel.parameter.HyperParameter:13
-#: aiaccel.parameter.HyperParameter:20 of
-msgid "str"
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_categorical:1 of
-msgid "Check the format of a hyperparameter when its data type is categorical."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_categorical:4
-#: aiaccel.config.FormatChecker.check_ordinal:4
-#: aiaccel.config.FormatChecker.check_uniform_float:4
-#: aiaccel.config.FormatChecker.check_uniform_int:4 of
-msgid "Items of hyperparameter."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_categorical:6
-#: aiaccel.config.FormatChecker.check_ordinal:6 of
-msgid "List of necessary items. example: [\"name\", \"type\", \"choices\"]"
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_categorical:9
-#: aiaccel.config.FormatChecker.check_ordinal:9
-#: aiaccel.config.FormatChecker.check_uniform_float:9
-#: aiaccel.config.FormatChecker.check_uniform_int:9 of
-msgid "List of optional items. example: [\"initial\", \"comment\"]"
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_hyperparameters_item:1 of
-msgid "Check the hyperpaarmeters has necessary or optional items."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_hyperparameters_item:5 of
-msgid "List of necessary items."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_hyperparameters_item:7 of
-msgid "List of optional items."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_initial_type:1 of
-msgid "Check the format defalt value."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_initial_type:4 of
-msgid ""
-"When Nelder-Mead is used, it can be defined in the form of a list, but in"
-" other cases, a list cannot be used."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_ordinal:1 of
-msgid "Check the format of a hyperparameter when its data type is ordinal."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_uniform_float:1 of
-msgid "Check the format of a hyperparameter when its data type is uniform float."
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_uniform_float:6
-#: aiaccel.config.FormatChecker.check_uniform_int:6 of
-msgid ""
-"List of necessary items. example: [\"name\", \"type\", \"lower\", "
-"\"upper\"]"
-msgstr ""
-
-#: aiaccel.config.FormatChecker.check_uniform_int:1 of
-msgid "Check the format of a hyperparameter when its data type is uniform int."
+#: aiaccel.config.ConfileWrapper.get
+#: aiaccel.config.JsonOrYamlObjectConfig.get_property
+#: aiaccel.config.JsonOrYamlObjectConfig.to_dict aiaccel.config.load_config
+#: aiaccel.module.AbstractModule.check_error
+#: aiaccel.module.AbstractModule.check_finished
+#: aiaccel.module.AbstractModule.current_max_trial_number
+#: aiaccel.module.AbstractModule.get_module_type
+#: aiaccel.module.AbstractModule.is_process_alive
+#: aiaccel.parameter.HyperParameter.sample
+#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
+#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_dict
+#: aiaccel.parameter.HyperParameterConfiguration.get_parameter_list
+#: aiaccel.parameter.HyperParameterConfiguration.sample
+#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options
+#: aiaccel.parameter.get_type aiaccel.parameter.load_parameter of
+msgid "戻り値の型"
 msgstr ""
 
 #: aiaccel.config.JsonOrYamlObjectConfig:1 of
-msgid "Bases: :py:class:`~aiaccel.config.BaseConfig`"
+msgid "ベースクラス: :py:class:`~aiaccel.config.BaseConfig`"
 msgstr ""
 
 #: aiaccel.config.JsonOrYamlObjectConfig.get_property:1 of
@@ -531,92 +308,80 @@ msgstr ""
 msgid "call post_process()"
 msgstr ""
 
-#: aiaccel.module.AbstractModule:19 of
-msgid "A barrier to synchronize processes."
-msgstr ""
-
-#: aiaccel.module.AbstractModule:21 of
-msgid "multiprocessing.Barrier"
-msgstr ""
-
-#: aiaccel.module.AbstractModule:25 aiaccel.parameter.get_grid_options:5 of
+#: aiaccel.module.AbstractModule:19 aiaccel.parameter.get_grid_options:5 of
 msgid "A config object."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:27 of
+#: aiaccel.module.AbstractModule aiaccel.parameter.HyperParameter
+#: aiaccel.parameter.HyperParameterConfiguration of
+msgid "type"
+msgstr ""
+
+#: aiaccel.module.AbstractModule:21 of
 msgid "ConfileWrapper"
 msgstr ""
 
-#: aiaccel.module.AbstractModule:31 of
-msgid "A path to alive directory."
-msgstr ""
-
-#: aiaccel.module.AbstractModule:33 aiaccel.module.AbstractModule:39
-#: aiaccel.module.AbstractModule:45 aiaccel.module.AbstractModule:51
-#: aiaccel.module.AbstractModule:57 aiaccel.module.AbstractModule:63
-#: aiaccel.module.AbstractModule:69 aiaccel.module.AbstractModule:75
-#: aiaccel.module.AbstractModule:111 of
-msgid "Path"
-msgstr ""
-
-#: aiaccel.module.AbstractModule:37 of
+#: aiaccel.module.AbstractModule:25 of
 msgid "A path to hp directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:43 of
+#: aiaccel.module.AbstractModule:27 aiaccel.module.AbstractModule:33
+#: aiaccel.module.AbstractModule:39 aiaccel.module.AbstractModule:45
+#: aiaccel.module.AbstractModule:51 aiaccel.module.AbstractModule:57
+#: aiaccel.module.AbstractModule:93 of
+msgid "Path"
+msgstr ""
+
+#: aiaccel.module.AbstractModule:31 of
 msgid "A path to lock directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:49 of
+#: aiaccel.module.AbstractModule:37 of
 msgid "A path to log directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:55 of
+#: aiaccel.module.AbstractModule:43 of
 msgid "A path to output directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:61 of
+#: aiaccel.module.AbstractModule:49 of
 msgid "A path to runner directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:67 of
-msgid "A path to state directory."
-msgstr ""
-
-#: aiaccel.module.AbstractModule:73 of
+#: aiaccel.module.AbstractModule:55 of
 msgid "A path to verification directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:79 of
+#: aiaccel.module.AbstractModule:61 of
 msgid "A number of files in hp/finished directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:81 aiaccel.module.AbstractModule:87
-#: aiaccel.module.AbstractModule:93 aiaccel.module.AbstractModule:105 of
+#: aiaccel.module.AbstractModule:63 aiaccel.module.AbstractModule:69
+#: aiaccel.module.AbstractModule:75 aiaccel.module.AbstractModule:87 of
 msgid "int"
 msgstr ""
 
-#: aiaccel.module.AbstractModule:85 of
+#: aiaccel.module.AbstractModule:67 of
 msgid "A number of files in hp/ready directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:91 of
+#: aiaccel.module.AbstractModule:73 of
 msgid "A number of files in hp/running directory."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:97 of
+#: aiaccel.module.AbstractModule:79 of
 msgid "A logger object."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:99 of
+#: aiaccel.module.AbstractModule:81 of
 msgid "logging.Logger"
 msgstr ""
 
-#: aiaccel.module.AbstractModule:103 of
+#: aiaccel.module.AbstractModule:85 of
 msgid "A loop count that is incremented in loop method."
 msgstr ""
 
-#: aiaccel.module.AbstractModule:109 of
+#: aiaccel.module.AbstractModule:91 of
 msgid "A path to a current workspace."
 msgstr ""
 
@@ -636,40 +401,54 @@ msgstr ""
 msgid "All optimization finished or not."
 msgstr ""
 
-#: aiaccel.module.AbstractModule.check_work_directory:1 of
-msgid "Check required directories exist or not."
-msgstr ""
-
-#: aiaccel.module.AbstractModule.check_work_directory:3 of
-msgid "All required directories exist or not."
-msgstr ""
-
-#: aiaccel.module.AbstractModule.curr_trial_number:1 of
+#: aiaccel.module.AbstractModule.current_max_trial_number:1 of
 msgid "Get current trial number"
 msgstr ""
 
-#: aiaccel.module.AbstractModule.curr_trial_number:5 of
+#: aiaccel.module.AbstractModule.current_max_trial_number:5 of
 msgid "current trial number"
 msgstr ""
 
 #: aiaccel.module.AbstractModule.exit_alive:1 of
-msgid "Exit the execution if alive files exist."
+msgid "Exit the execution."
 msgstr ""
 
 #: aiaccel.module.AbstractModule.exit_alive:3 of
 msgid "A path to an alive file."
 msgstr ""
 
-#: aiaccel.module.AbstractModule.get_dict_state:1 of
+#: aiaccel.module.AbstractModule.exit_alive:6
+#: aiaccel.module.AbstractModule.get_each_state_count:3
+#: aiaccel.module.AbstractModule.inner_loop_main_process:3
+#: aiaccel.module.AbstractModule.inner_loop_post_process:4
+#: aiaccel.module.AbstractModule.inner_loop_pre_process:4
+#: aiaccel.module.AbstractModule.loop:4
+#: aiaccel.module.AbstractModule.loop_post_process:3
+#: aiaccel.module.AbstractModule.loop_pre_process:3
+#: aiaccel.module.AbstractModule.post_process:3
+#: aiaccel.module.AbstractModule.pre_process:3
+#: aiaccel.module.AbstractModule.print_dict_state:3
+#: aiaccel.module.AbstractModule.resume:6
+#: aiaccel.module.AbstractModule.set_logger:14
+#: aiaccel.module.AbstractModule.set_native_random_seed:5
+#: aiaccel.module.AbstractModule.set_native_random_state:6
+#: aiaccel.module.AbstractModule.set_numpy_random_seed:5
+#: aiaccel.module.AbstractModule.set_numpy_random_state:6
+#: aiaccel.module.AbstractModule.start:3 aiaccel.module.AbstractModule.stop:5
+#: aiaccel.wrapper_tools.save_result:18 of
+msgid "None"
+msgstr ""
+
+#: aiaccel.module.AbstractModule.get_each_state_count:1 of
 msgid "Updates the number of files in hp(hyper parameter) directories."
 msgstr ""
 
-#: aiaccel.module.AbstractModule.get_module_type_alive_file:1 of
-msgid "Get this module type and a path to alive file."
+#: aiaccel.module.AbstractModule.get_module_type:1 of
+msgid "Get this module type."
 msgstr ""
 
-#: aiaccel.module.AbstractModule.get_module_type_alive_file:3 of
-msgid "This module type and a path to alive file."
+#: aiaccel.module.AbstractModule.get_module_type:3 of
+msgid "This module type(name)."
 msgstr ""
 
 #: aiaccel.module.AbstractModule.get_native_random_state:1
@@ -689,6 +468,17 @@ msgstr ""
 
 #: aiaccel.module.AbstractModule.inner_loop_main_process:1 of
 msgid "A main loop process. This process is repeated every main loop."
+msgstr ""
+
+#: aiaccel.module.AbstractModule.inner_loop_main_process
+#: aiaccel.module.AbstractModule.inner_loop_post_process
+#: aiaccel.module.AbstractModule.inner_loop_pre_process
+#: aiaccel.module.AbstractModule.loop_post_process
+#: aiaccel.module.AbstractModule.post_process
+#: aiaccel.parameter.HyperParameter.sample
+#: aiaccel.parameter.HyperParameterConfiguration.get_hyperparameter
+#: aiaccel.parameter.get_best_parameter aiaccel.parameter.get_grid_options of
+msgid "例外"
 msgstr ""
 
 #: aiaccel.module.AbstractModule.inner_loop_main_process:5
@@ -712,16 +502,6 @@ msgstr ""
 
 #: aiaccel.module.AbstractModule.inner_loop_pre_process:2 of
 msgid "repeated every main loop."
-msgstr ""
-
-#: aiaccel.module.AbstractModule.is_barrier:1 of
-msgid "Is barrier waiting working well or not."
-msgstr ""
-
-#: aiaccel.module.AbstractModule.is_barrier:3 of
-msgid ""
-"It returns false if the barrier object is not set or the processes are "
-"not running. Otherwise, it returns true."
 msgstr ""
 
 #: aiaccel.module.AbstractModule.is_process_alive:1 of
@@ -748,14 +528,6 @@ msgstr ""
 msgid "Called before entering a main loop process."
 msgstr ""
 
-#: aiaccel.module.AbstractModule.make_work_directory:1 of
-msgid "Create a work directory."
-msgstr ""
-
-#: aiaccel.module.AbstractModule.make_work_directory:5 of
-msgid "It raises if a workspace argument (self.ws) is"
-msgstr ""
-
 #: aiaccel.module.AbstractModule.post_process:1 of
 msgid "Post-procedure after executed processes."
 msgstr ""
@@ -778,14 +550,6 @@ msgstr ""
 
 #: aiaccel.module.AbstractModule.resume:2 of
 msgid "optimization data in advance."
-msgstr ""
-
-#: aiaccel.module.AbstractModule.set_barrier:1 of
-msgid "Set a multiprocessing barrier."
-msgstr ""
-
-#: aiaccel.module.AbstractModule.set_barrier:3 of
-msgid "A barrier object."
 msgstr ""
 
 #: aiaccel.module.AbstractModule.set_logger:1 of
@@ -850,6 +614,10 @@ msgstr ""
 
 #: aiaccel.parameter.HyperParameter:11 of
 msgid "A parameter name."
+msgstr ""
+
+#: aiaccel.parameter.HyperParameter:13 aiaccel.parameter.HyperParameter:20 of
+msgid "str"
 msgstr ""
 
 #: aiaccel.parameter.HyperParameter:17 of
@@ -1114,4 +882,206 @@ msgstr ""
 #: ../../source/aiaccel.rst:60
 msgid "Module contents"
 msgstr ""
+
+#~ msgid "Get a file path to serialize a random generator."
+#~ msgstr ""
+
+#~ msgid "Parameters"
+#~ msgstr ""
+
+#~ msgid "A path to a state directory."
+#~ msgstr ""
+
+#~ msgid "A class name of a caller module."
+#~ msgstr ""
+
+#~ msgid "A loop count."
+#~ msgstr ""
+
+#~ msgid "A random type in native or numpy."
+#~ msgstr ""
+
+#~ msgid "Returns"
+#~ msgstr ""
+
+#~ msgid "A path to serialize a specified random generator."
+#~ msgstr ""
+
+#~ msgid "Return type"
+#~ msgstr ""
+
+#~ msgid "Raises"
+#~ msgstr ""
+
+#~ msgid "if invalid random_type is set."
+#~ msgstr ""
+
+#~ msgid "Get a module name(master, optimizer or scheduler) from class name."
+#~ msgstr ""
+
+#~ msgid "A class name of caller."
+#~ msgstr ""
+
+#~ msgid "A module name string \"master\", \"optimizer\" or \"scheduler\"."
+#~ msgstr ""
+
+#~ msgid "if class_name does not match module names."
+#~ msgstr ""
+
+#~ msgid "Bases: :py:class:`object`"
+#~ msgstr ""
+
+#~ msgid "Check the hyperparameter items. :param None:"
+#~ msgstr ""
+
+#~ msgid "Note"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Available items - Random: uniform_float, "
+#~ "uniform_int, categorical, ordinal - Grid: "
+#~ "uniform_float, uniform_int, categorical, ordinal "
+#~ "- Sobol: uniform_float, uniform_int - "
+#~ "NM: uniform_float, uniform_int - TPE: "
+#~ "niform_float, uniform_int, categorical, ordinal"
+#~ msgstr ""
+
+#~ msgid "Example"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "config_file_path=config_file_path, type=[str], "
+#~ "default=_DEFAULT_WORKSPACE, warning=warn, "
+#~ "group=\"generic\", keys=(\"workspace\")"
+#~ msgstr ""
+
+#~ msgid "Configuration file format check"
+#~ msgstr ""
+
+#~ msgid "List of data types supported by this search algorithm."
+#~ msgstr ""
+
+#~ msgid "Items"
+#~ msgstr ""
+
+#~ msgid "uniform_float"
+#~ msgstr ""
+
+#~ msgid "uniform_int"
+#~ msgstr ""
+
+#~ msgid "categorical"
+#~ msgstr ""
+
+#~ msgid "ordinal"
+#~ msgstr ""
+
+#~ msgid "list"
+#~ msgstr ""
+
+#~ msgid "Items of hyperparametes."
+#~ msgstr ""
+
+#~ msgid "search algorithm search algorithm."
+#~ msgstr ""
+
+#~ msgid "Check the format of a hyperparameter when its data type is categorical."
+#~ msgstr ""
+
+#~ msgid "Items of hyperparameter."
+#~ msgstr ""
+
+#~ msgid "List of necessary items. example: [\"name\", \"type\", \"choices\"]"
+#~ msgstr ""
+
+#~ msgid "List of optional items. example: [\"initial\", \"comment\"]"
+#~ msgstr ""
+
+#~ msgid "Check the hyperpaarmeters has necessary or optional items."
+#~ msgstr ""
+
+#~ msgid "List of necessary items."
+#~ msgstr ""
+
+#~ msgid "List of optional items."
+#~ msgstr ""
+
+#~ msgid "Check the format defalt value."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When Nelder-Mead is used, it can"
+#~ " be defined in the form of a"
+#~ " list, but in other cases, a "
+#~ "list cannot be used."
+#~ msgstr ""
+
+#~ msgid "Check the format of a hyperparameter when its data type is ordinal."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Check the format of a hyperparameter "
+#~ "when its data type is uniform "
+#~ "float."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "List of necessary items. example: "
+#~ "[\"name\", \"type\", \"lower\", \"upper\"]"
+#~ msgstr ""
+
+#~ msgid "Check the format of a hyperparameter when its data type is uniform int."
+#~ msgstr ""
+
+#~ msgid "Bases: :py:class:`~aiaccel.config.BaseConfig`"
+#~ msgstr ""
+
+#~ msgid "A barrier to synchronize processes."
+#~ msgstr ""
+
+#~ msgid "multiprocessing.Barrier"
+#~ msgstr ""
+
+#~ msgid "A path to alive directory."
+#~ msgstr ""
+
+#~ msgid "A path to state directory."
+#~ msgstr ""
+
+#~ msgid "Check required directories exist or not."
+#~ msgstr ""
+
+#~ msgid "All required directories exist or not."
+#~ msgstr ""
+
+#~ msgid "Exit the execution if alive files exist."
+#~ msgstr ""
+
+#~ msgid "Get this module type and a path to alive file."
+#~ msgstr ""
+
+#~ msgid "This module type and a path to alive file."
+#~ msgstr ""
+
+#~ msgid "Is barrier waiting working well or not."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It returns false if the barrier "
+#~ "object is not set or the processes"
+#~ " are not running. Otherwise, it "
+#~ "returns true."
+#~ msgstr ""
+
+#~ msgid "Create a work directory."
+#~ msgstr ""
+
+#~ msgid "It raises if a workspace argument (self.ws) is"
+#~ msgstr ""
+
+#~ msgid "Set a multiprocessing barrier."
+#~ msgstr ""
+
+#~ msgid "A barrier object."
+#~ msgstr ""
 
