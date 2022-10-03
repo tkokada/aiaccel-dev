@@ -8,7 +8,7 @@ joblib==1.2.0
 monotonic==1.5
 myst_parser >= 0.18.1
 numpy
-pluggy >= 0.13.1
+pluggy
 py
 pytest
 pytest-arraydiff==0.2
@@ -24,10 +24,14 @@ pytest-twisted
 PyYAML==5.4
 #scipy==1.2.1
 six==1.12.0
-sphinx >= 5.1.1
-sphinx_fontawesome >= 0.0.6
-sphinx_rtd_theme >= 1.0.0
-sphinx-intl >= 2.0.1
+sphinx
+sphinx_fontawesome
+sphinx_rtd_theme
+sphinx-intl
+#sphinx >= 5.1.1
+#sphinx_fontawesome >= 0.0.6
+#sphinx_rtd_theme >= 1.0.0
+#sphinx-intl >= 2.0.1
 SQLAlchemy==1.4.27
 toml==0.10.0
 transitions==0.8.0
