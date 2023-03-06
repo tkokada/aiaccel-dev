@@ -128,4 +128,3 @@ This tutorial describes how to run examples/sphere on ABCI.
 * Part of this software was developed in a project commissioned by the New Energy and Industrial Technology Deve
 lopment Organization (NEDO).
 * aiaccel is built with the help of Optuna.
-
